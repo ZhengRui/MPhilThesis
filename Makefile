@@ -7,7 +7,7 @@ main.pdf: main.tex \
 	xelatex main.tex
 
 clean:
-	rm *.aux *.bbl *.blg *.toc *.lof *.log *.lot *.bcf *.xml *.xdv
+	rm *.aux *.bbl *.blg *.toc *.lof *.log *.lot *.bcf *.xml *.xdv *.out
 read:
 	if [ -e evince.pid ]; then \
 		kill -TERM $$(cat evince.pid) || true; \
