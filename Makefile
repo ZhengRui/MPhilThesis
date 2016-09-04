@@ -1,13 +1,11 @@
 thesis.pdf: main.tex \
 				chapter/*.tex \
 
-	latex main.tex
+	xelatex main.tex
 	bibtex main
-	latex main.tex
-	latex main.tex
-	dvipdf main.dvi thesis.pdf
+	xelatex main.tex
 
 clean:
-	rm *.aux *.bbl *.blg *.dvi *.pdf *.bak *.toc *.tol *.lof *.log *.lot
+	rm *.aux *.bbl *.blg *.toc *.lof *.log *.lot
 read:
-	acroread thesis.pdf
+	foxitreader thesis.pdf
