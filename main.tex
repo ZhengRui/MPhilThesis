@@ -6,20 +6,26 @@
 
 \documentclass{ustthesis}
 
-\usepackage[backend=biber, style=numeric]{biblatex}
-\addbibresource{ref.bib}
 
 \usepackage{times,amsmath,epsfig}
 \usepackage{graphicx,algorithm}
 \usepackage[noend]{algorithmic}
 \usepackage[center]{subfigure}
-\usepackage{color,graphicx}
+\usepackage{xcolor,graphicx}
 \usepackage{amsmath}
 \newtheorem{proof}{Proof}
 \usepackage[left=2.5cm,top=4.0cm,bottom=2.5cm, right=2.5cm]{geometry}
 
 \newcommand{\red}[1]{#1}
 \newcommand{\tab}[1]{\hspace{3mm}}
+
+
+\usepackage[backend=biber, style=numeric]{biblatex}
+\addbibresource{ref.bib}
+\usepackage[]{hyperref}
+\hypersetup{
+    linkbordercolor=green,
+}
 
 % \usepackage{latexsym}
     % Use the "latexsym" package when encountering the following error:
@@ -147,7 +153,6 @@
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \input{chapter/sec-introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -181,7 +186,7 @@
 % \bibliography{ref}
 
 % if use biber
-\printbibliography
+\printbibliography[heading=bibintoc]
 
 % Please run "bibtex ustthesis_test" before the bibliography can be
 % included.

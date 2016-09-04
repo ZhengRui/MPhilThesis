@@ -631,13 +631,12 @@
 %	"Authorsation" is changed to "Authorization" instead.
 \def\authorise{
 %	\pchapter{Authorisation}
-%        \addcontentsline{toc}{chapter}{Authorisation Page}
+        \phantomsection % if use hyperref package
         \addcontentsline{toc}{chapter}{Authorization Page}
 % Chan:
 %	Add some vertical space.
 	\mbox{} \vspace{1cm}
 	\begin{center}
-%	    \underline{\Lbi Authorisation}
 	    \underline{\Lbi Authorization}
 	\end{center}
 	\vspace{1cm}
@@ -695,6 +694,7 @@ scholarly research.}
     %   Add \textspace here to prevent problems when displaying
     %   a long title.
     \textspace
+    \phantomsection % if use hyperref package
     \addcontentsline{toc}{chapter}{Abstract}
 %    \let\footnotesize\small % Local definitions to make \thanks produce
 %    \let\footnoterule\relax % \normalsize footnotes with no separating rule.
@@ -753,6 +753,7 @@ scholarly research.}
 	% so start with page 1 (not 0) and don't turn page numbers off forever.
 	\abstractpage\thispagestyle{empty}
 	% tuck 3/17/90: added next two lines (show Abstract in toc)
+    \phantomsection % if use hyperref package
 	\addcontentsline{toc}{chapter}{ABSTRACT}
 	\typeout{UMIabstract}
 	\textspace
@@ -1873,6 +1874,7 @@ scholarly research.}
 % Chan:
 %	Move \end{center} from above position to here.
     \end{center}
+    \phantomsection % if use hyperref package
     \addcontentsline{toc}{chapter}{Signature Page}
     \typeout{Signature Page}
     \textspaceundo
@@ -1924,6 +1926,7 @@ scholarly research.}
   \end{abstractpage}
   \setcounter{footnote}{0} % Footnotes start at zero again.
   \let\makeabstract\relax % only ONCE!?
+  \phantomsection % if use hyperref package
   \addcontentsline{toc}{chapter}{Abstract}
   \textspace
 }
