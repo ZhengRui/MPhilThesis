@@ -6,6 +6,9 @@
 
 \documentclass{ustthesis}
 
+\usepackage[backend=biber, style=numeric]{biblatex}
+\addbibresource{ref.bib}
+
 \usepackage{times,amsmath,epsfig}
 \usepackage{graphicx,algorithm}
 \usepackage[noend]{algorithmic}
@@ -173,9 +176,13 @@
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\bibliographystyle{plain}
+% if use bibtex
+% \bibliographystyle{plain}
+% \bibliography{ref}
 
-\bibliography{ref}
+% if use biber
+\printbibliography
+
 % Please run "bibtex ustthesis_test" before the bibliography can be
 % included.
 

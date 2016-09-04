@@ -2,7 +2,7 @@ main.pdf: main.tex \
 				chapter/*.tex \
 
 	xelatex --no-pdf main.tex
-	bibtex main
+	biber main
 	xelatex --no-pdf main.tex
 	xelatex main.tex
 
