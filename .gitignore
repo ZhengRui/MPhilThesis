@@ -1,5 +1,8 @@
 *.aux
 *.bbl
+*.bcf
+*.xdv
+*.xml
 *.blg
 *.dvi
 *.fdb_latexmk
