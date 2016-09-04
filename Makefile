@@ -1,11 +1,15 @@
-thesis.pdf: main.tex \
+main.pdf: main.tex \
 				chapter/*.tex \
 
-	xelatex main.tex
+	xelatex --no-pdf main.tex
 	bibtex main
+	xelatex --no-pdf main.tex
 	xelatex main.tex
 
 clean:
 	rm *.aux *.bbl *.blg *.toc *.lof *.log *.lot
 read:
-	foxitreader thesis.pdf
+	if [ -e evince.pid ]; then \
+		kill -TERM $$(cat evince.pid) || true; \
+	fi;
+	evince main.pdf & echo $$! > evince.pid

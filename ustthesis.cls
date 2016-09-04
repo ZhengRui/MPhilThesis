@@ -647,7 +647,6 @@
 	{I hereby declare that I am the sole author of the thesis.}
 	\par\vspace{1cm}
 	\indent
-%	{I authorise The Hong Kong University of Science and Technology to lend
 	{I authorize the Hong Kong University of Science and Technology to lend
 this thesis to other institutions or individuals for the purpose of scholarly
 research.}
@@ -656,7 +655,6 @@ research.}
 %	\par\vspace{6cm}
 	\par\vspace{1cm}
 	\indent
-%	{I further authorise The Hong Kong University of Science and Technology
 	{I further authorize the Hong Kong University of Science and Technology
 to reproduce the thesis by photocopying or by other means, in total or in part,
 at the request of other institutions or individuals for the purpose of
@@ -668,7 +666,6 @@ scholarly research.}
           \candidate{\@author}
         \end{center}
 	\textspaceundo
-%	\typeout{Authorisation Page}
 	\typeout{Authorization Page}
 	\newpage
 }
