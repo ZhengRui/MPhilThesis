@@ -1,5 +1,48 @@
 \chapter{Introduction}\label{sec-introduction}
 
-alexnet~\cite{krizhevsky2012imagenet} here
+\section{Awareness of Visual Privacy}
+
+
+
+
+
+
+The trend of embedding cameras in wearables will keep growing, an example of which is smart contact lens\footnote{\url{http://money.cnn.com/2016/05/12/technology/eyeball-camera-contact-sony/}}.
+
+However, the ubiquitous presence of cameras, the ease of taking photos and recording video, along with ``always on'' and ``non overt act'' features threaten individuals to have private or anonymous social lives, raising people's concerns of visual privacy.
+
+More specifically, photos and videos captured without getting permissions from bystanders, and then uploaded to social networking sites, can be accessed by everyone online, potentially leading to invasion of privacy.
+Malicious applications on the device may also inadvertently leak captured media data\footnote{\url{http://www.infosecurity-magazine.com/news/popular-android-camera-app-leaks/}}.
+What makes it worse is that recognition technologies can link images to specific people, places, and things, thus reveal far more information than expected, making searchable what was not previously considered searchable \cite{shaw2006recognition, acquisti2014face}.
+All these possible consequences, whether have been realized by people or not, may hinder their reception to advanced wearable consumer products.
+A representative example is Google Glass, which received letters from US Congressional Bi-Partisan Privacy Caucus and Data Protection Commission of Canada concerning privacy risks to the public \cite{congress, commission}.
+
+To address privacy issues raised by unauthorized or unnoticed visual information collection, both legal and technical measurements have been proposed.
+For instance, Google Glass is banned at places such as banks, hospitals, and bars\footnote{\url{https://www.searchenginejournal.com/top-10-places-that-have-banned-google-glass/66585/}}.
+However, prohibiting from using cameras does not resolve the issue fundamentally, but sacrificing people's rights to capture happy moments even if no bystander in the background, since there are sorts of ways to secretly record anything.
+As a result, there are growing needs to design technical solutions to protect individuals' visual privacy in a world where cameras are becoming pervasive.
+Some recent attempts are using visual markers such as QR code \cite{bo2014privacy, roesner2014world} and colorful hints like hat \cite{schiff2009respectful} for individuals to actively express their unwillingness to be captured.
+However, these visual markers suffers from same limitations.
+First, people are less likely to wear a QR code, despite the technical feasibility of these approaches.
+Moreover, privacy concerns vary widely among individuals, and many change from time to time even for the same person, which cannot be conveyed by uniform or static visual markers.
+In fact, what individuals are doing, with whom, at where, determine whether people think their privacy should be protected.
+Therefore, we are looking for a more natural, user--friendly, flexible, and fine-grained mechanism for people to express, modify, and control their individualized privacy preferences.
+
+In this paper, we propose a trusted image capture framework for individuals to control their visual privacy using:
+\begin{inparaenum}[\itshape i\itshape)]
+\item personalized privacy profiles, that people can define their context--dependent privacy preferences with a set of privacy related factors including location, scene, and other's presence; and
+\item face--signatures, for devices to locate individuals who request privacy control; and
+\item hand gestures, which helps people interact with cameras to temporarily change their privacy preferences.
+\end{inparaenum}
+By using the framework, the device will automatically compute context factors, compare them with people's privacy profiles, and finally enforce privacy policies conforming to people's privacy preferences.
+
+The main contribution of our work is that we propose a novel visual privacy control mechanism that aims to relieve people's negative attitudes towards pervasive cameras.
+To this end, we concentrate on context elements which determine the nature of privacy problem.
+We also propose an interactive approach to flexibly convey privacy preferences with hand gestures.
+
+
+\section{Related Works}
+
+\section{Challenges}
 
 \newpage
