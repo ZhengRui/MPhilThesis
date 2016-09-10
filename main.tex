@@ -11,17 +11,24 @@
 \usepackage{graphicx,algorithm}
 \usepackage[noend]{algorithmic}
 \usepackage[center]{subfigure}
-\usepackage{xcolor,graphicx}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
 \usepackage{amsmath}
 \newtheorem{proof}{Proof}
 \usepackage[left=2.5cm,top=4.0cm,bottom=2.5cm, right=2.5cm]{geometry}
 \usepackage{paralist}
+\usepackage[hyphens]{url}
+\usepackage{array, booktabs, multirow} % vertical align of table cell content
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\usepackage{adjustbox}
+\usepackage{pifont}
 
 \newcommand{\red}[1]{#1}
 \newcommand{\tab}[1]{\hspace{3mm}}
 
 
-\usepackage[backend=biber, style=numeric]{biblatex}
+\usepackage[backend=biber, sorting=none]{biblatex}
 \addbibresource{ref.bib}
 \usepackage[]{hyperref}
 \hypersetup{
@@ -156,6 +163,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \input{chapter/sec-introduction}
+\input{chapter/sec-related}
 \input{chapter/sec-cnn}
 \input{chapter/sec-cardea}
 \input{chapter/sec-conclusion}

@@ -1,48 +1,23 @@
 \chapter{Introduction}\label{sec-introduction}
 
-\section{Awareness of Visual Privacy}
+The concern about visual privacy has been growing in last decade with increasing adoption of video surveillance systems for security reasons. The statistics shows there are 125 video surveillance cameras per thousand people in U.S. by 2014~\cite{links:numofsurv}. Momentum of new technologies such as the Internet of Things (IOT) will keep driving global video surveillance market in following years, which will raise more privacy concerns.
 
+Other than closed-circuit television (CCTV) surveillance systems for security reasons, handheld devices such as camera phones are also used extensively for the recording of meaningful life moments. Recently, coming with the explosion of products in augmented reality (e.g., Google Glass), robotics (e.g., iRobot Create platform), and gaming (e.g., Kinect), is more and more cameras being embedded in these platforms for the enhancement of life experiences. The trend of embedding cameras, especially in wearables, will keep growing, an example of which is smart contact lens~\cite{links:eyecontact}. However, the ubiquitous presence of cameras, the ease of taking photos and recording videos, along with ``always on'' and ``non overt act'' features threaten individuals to have private or anonymous social lives, raising people's concerns of visual privacy.
 
+More specifically, photos and videos captured without getting permissions from bystanders, and then uploaded to social networking sites, can be accessed by everyone online, potentially leading to invasion of privacy. Malicious applications on the device may also inadvertently leak captured media data~\cite{links:appleakspriv}.
 
+Benefited from research breakthroughs from deep learning community, current vision perception systems are advancing fast in their capabilities of understanding image and video contents~\cite{links:awesomedeepvision}. Nowadays, recognition technologies can link images to specific people~\cite{taigman2014deepface,sun2015deepid3,schroff2015facenet}, places~\cite{weyand2016planet}, and general objects~\cite{russakovsky2015imagenet}, making what previously unsearchable now searchable~\cite{acquisti2014face}, thus reveal far more private information than expected.
 
+Both legal and technical measures have been proposed to resolve visual privacy concerns. For instance, Google Glass is banned at places such as banks, hospitals, and bars~\cite{links:glassbanned}. However, prohibition of cameras usage does not resolve the issue fundamentally, instead it may intrude people's rights to capture happy moments. As a result, there are growing needs to design technical solutions to protect individuals' visual privacy in a world with pervasive cameras. Technical solutions that have been proposed so far are still limited, in the way that they are mostly based on static policies, thus users can not flexibly express their individualized privacy preferences based on surrounding contexts when they are captured. Moreover, previous works require users to wear visual markers such as hats~\cite{schiff2009respectful} for the detection of interested persons, or clip tags such as QR codes~\cite{bo2014privacy,roesner2014world} for the fetching of privacy polices. Despite technical feasibilities of these approaches, the extra need of setting up markers/tags and the resulting aesthetically unpleasant appearance will hinder users' willingness to adopt these solutions.
 
-
-The trend of embedding cameras in wearables will keep growing, an example of which is smart contact lens\footnote{\url{http://money.cnn.com/2016/05/12/technology/eyeball-camera-contact-sony/}}.
-
-However, the ubiquitous presence of cameras, the ease of taking photos and recording video, along with ``always on'' and ``non overt act'' features threaten individuals to have private or anonymous social lives, raising people's concerns of visual privacy.
-
-More specifically, photos and videos captured without getting permissions from bystanders, and then uploaded to social networking sites, can be accessed by everyone online, potentially leading to invasion of privacy.
-Malicious applications on the device may also inadvertently leak captured media data\footnote{\url{http://www.infosecurity-magazine.com/news/popular-android-camera-app-leaks/}}.
-What makes it worse is that recognition technologies can link images to specific people, places, and things, thus reveal far more information than expected, making searchable what was not previously considered searchable \cite{shaw2006recognition, acquisti2014face}.
-All these possible consequences, whether have been realized by people or not, may hinder their reception to advanced wearable consumer products.
-A representative example is Google Glass, which received letters from US Congressional Bi-Partisan Privacy Caucus and Data Protection Commission of Canada concerning privacy risks to the public \cite{congress, commission}.
-
-To address privacy issues raised by unauthorized or unnoticed visual information collection, both legal and technical measurements have been proposed.
-For instance, Google Glass is banned at places such as banks, hospitals, and bars\footnote{\url{https://www.searchenginejournal.com/top-10-places-that-have-banned-google-glass/66585/}}.
-However, prohibiting from using cameras does not resolve the issue fundamentally, but sacrificing people's rights to capture happy moments even if no bystander in the background, since there are sorts of ways to secretly record anything.
-As a result, there are growing needs to design technical solutions to protect individuals' visual privacy in a world where cameras are becoming pervasive.
-Some recent attempts are using visual markers such as QR code \cite{bo2014privacy, roesner2014world} and colorful hints like hat \cite{schiff2009respectful} for individuals to actively express their unwillingness to be captured.
-However, these visual markers suffers from same limitations.
-First, people are less likely to wear a QR code, despite the technical feasibility of these approaches.
-Moreover, privacy concerns vary widely among individuals, and many change from time to time even for the same person, which cannot be conveyed by uniform or static visual markers.
-In fact, what individuals are doing, with whom, at where, determine whether people think their privacy should be protected.
-Therefore, we are looking for a more natural, user--friendly, flexible, and fine-grained mechanism for people to express, modify, and control their individualized privacy preferences.
-
-In this paper, we propose a trusted image capture framework for individuals to control their visual privacy using:
+Therefore, the motivation of this thesis is to seek a more natural, user–friendly, flexible, and fine-grained mechanism for people to express, modify, and control their individualized privacy preferences. Under this guideline, we propose Cardea, a context-aware and interactive visual privacy control framework, which lets individuals control their visual privacies through:
 \begin{inparaenum}[\itshape i\itshape)]
-\item personalized privacy profiles, that people can define their context--dependent privacy preferences with a set of privacy related factors including location, scene, and other's presence; and
-\item face--signatures, for devices to locate individuals who request privacy control; and
-\item hand gestures, which helps people interact with cameras to temporarily change their privacy preferences.
+\item personal privacy profiles, with which people can define their context–dependent privacy preferences;
+\item different visual indicators: face features and tags, for devices to automatically locates individuals who request privacy protection;
+\item hand gestures, for people to temporarily update and flexibly inform cameras of their privacy preferences.
 \end{inparaenum}
-By using the framework, the device will automatically compute context factors, compare them with people's privacy profiles, and finally enforce privacy policies conforming to people's privacy preferences.
+When using Cardea, the device will automatically compute context factors, compare them with people’s privacy profiles, and finally enforce privacy policies conforming to people’s privacy preferences. To our knowledge, this is one of the pioneering works, if not the first, that leverages deep learning models to enable visual privacy control in a context-specific and interactive manner.
 
-The main contribution of our work is that we propose a novel visual privacy control mechanism that aims to relieve people's negative attitudes towards pervasive cameras.
-To this end, we concentrate on context elements which determine the nature of privacy problem.
-We also propose an interactive approach to flexibly convey privacy preferences with hand gestures.
-
-
-\section{Related Works}
-
-\section{Challenges}
+The rest of the thesis is organized as follows: We first review and discuss related works on visual privacy control in Chapter 2. Following that we introduce convolutional neural networks, the core of Cardea's image processing module, and their applications on related computer vision problems. We then give details about the design, implementation and evaluation of Cardea in Chapter 4. Finally, we share our thoughts on possible future work and conclude the thesis in Chapter 5.
 
 \newpage

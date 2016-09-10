@@ -1,22 +1,13 @@
 \begin{abstract}
-We design and implement Mars, a MapReduce runtime system accelerated with
-graphics processing units (GPUs). MapReduce is a simple and flexible
-parallel programming paradigm originally proposed by Google, for the ease
-of large scale data processing on thousands of CPUs. Compared
-with CPUs, GPUs have an order of magnitude higher computation power
-and memory bandwidth. However, GPUs are designed as special-purpose
-co-processors and their programming interfaces are less familiar than
-those on the CPUs to MapReduce programmers.
- 
-To harness GPUs' power for MapReduce, we developed
-Mars to run on NVIDIA GPUs, AMD GPUs, as well as
-multi-core CPUs.  Furthermore, we integrated Mars into Hadoop,
-an open-source CPU-based distributed MapReduce system. Mars hides the
-programming complexity of GPUs behind the simple and familiar
-MapReduce interface, and automatically manages task partitioning,
-data distribution, and parallelization on the processors.
-We have implemented six representative applications on Mars
-and evaluated their performance on PCs equipped with GPUs
-as well as multi-core CPUs. The GPU acceleration with an NVIDIA GTX280 achieved a speedup of an order of magnitude over a quad-core CPU. Utilizing both the GPU and the CPU further improved GPU-only performance by 40\% for some applications. Additionally, integrating Mars into Hadoop
-enabled GPU acceleration for a network of PCs.
+
+The growing popularity of mobile and wearable devices with built–in cameras, the bright prospect of camera related applications such as augmented reality and life–logging system, the increased ease of taking and sharing photos, along with advances in computer vision techniques, have greatly facilitated people’s lives in many aspects, but inevitably raised people’s concerns about visual privacy at the same time.
+
+Motivated by the finding that people’s privacy concerns are influenced by the context, in this thesis, we propose Cardea, a context–aware and interactive visual privacy control framework that enforces privacy policies according to people’s privacy preferences. The framework provides people with fine–grained visual privacy control using:
+\begin{inparaenum}[\itshape i\itshape)]
+\item personal privacy profiles, with which people can define their context–dependent privacy preferences;
+\item different visual indicators: face features and tags, for devices to automatically locates individuals who request privacy protection;
+\item hand gestures, for people to temporarily update and flexibly inform cameras of their privacy preferences.
+\end{inparaenum}
+Benefited from recent progresses in face and object recognition, Cardea offers a way for context-dependent privacy control in a natural and flexible manner, which differs from tag and marker based systems. We design and implement the framework consisting of Android client app and cloud control server, with convolutional neural networks as core of the image processing module. Our evaluation results confirm such framework is practical and effective, showing promising future for context–aware visual privacy control on mobile and wearable devices.
+
 \end{abstract}
