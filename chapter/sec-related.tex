@@ -1,5 +1,10 @@
 \chapter{Related Works}\label{sec-related}
 
+\section{User Studies}
+
+
+
+
 
 %% use table + adjustbox
 % \begin{table}[ht]
@@ -8,106 +13,108 @@
   % \begin{tabular}{M{1cm}|M{1cm}|M{2.1cm}|M{1.5cm}|M{1.5cm}|M{2.1cm}|M{1.5cm}|M{2.1cm}|M{1cm}|M{1.5cm}}
 
 %% or use longtable
-\setlength\LTleft{-1.6cm}
-\begin{longtable}{M{1cm}|M{1cm}|M{2.1cm}|M{1.5cm}|M{1.5cm}|M{2.1cm}|M{1.5cm}|M{2.1cm}|M{1cm}|M{1.5cm}}
+\setlength\LTleft{-1.7cm}
+\begin{longtable}{M{1cm}|M{1.2cm}|M{2.1cm}|M{1.5cm}|M{1.5cm}|M{2.1cm}|M{1.5cm}|M{2.1cm}|M{1cm}|M{1.5cm}}
     \toprule \hline
-    \multirow{2}{1cm}[-0.5em]{year} & \multirow{2}{1cm}[-0.5em]{user study} & \multicolumn{2}{c|}{problem setting} & \multicolumn{2}{c|}{technical solution} & \multicolumn{2}{c|}{enforcement time} & \multicolumn{2}{c}{privacy object}\\
+    \multirow{2}{1cm}[-0.5em]{year} & \multirow{2}{1.2cm}[-0.5em]{\centering privacy survey} & \multicolumn{2}{c|}{problem setting} & \multicolumn{2}{c|}{technical solution} & \multicolumn{2}{c|}{enforcement time} & \multicolumn{2}{c}{privacy object}\\
     \cline{3-10}
-    & & video surveillance & mobile cameras & computer vision & encryption / decryption & in-situ / run time & access / distribution & user & bystander\\
+    & & video surveillance & mobile cameras & computer vision & cryptography & in-situ / run time & access / distribution & user & bystander\\
     \hline
     \endhead
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{I-Pic: A Platform for Privacy-Compliant Image Capture~\cite{aditya2016pic}}\\
-    2016 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{I-Pic: A Platform for Privacy-Compliant Image Capture~\cite{aditya2016pic}}\\
+    2016 & \ding{51} & & \ding{51} & \ding{51} & \ding{51} & \ding{51} & & & \ding{51} \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Recent work which allows people to broadcast their privacy preferences and appearance information to nearby devices through BLE. These preferences are based on social context.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{What You Mark is What Apps See~\cite{raval2016you}}\\
-    2016 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{What You Mark is What Apps See~\cite{raval2016you}}\\
+    2016 & & & \ding{51} & \ding{51} & & \ding{51} & \ding{51} & \ding{51} & \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Propose a system that give users control to mark secure regions for third-party applications. It is implemented within Android camera subsystem.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{Sensitive Lifelogs: A Privacy Analysis of Photos from Wearable Cameras~\cite{hoyle2015sensitive}}\\
-    2015 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{Sensitive Lifelogs: A Privacy Analysis of Photos from Wearable Cameras~\cite{hoyle2015sensitive}}\\
+    2015 & \ding{51} & & \ding{51} & & & & & & \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Analyze the photos collected in~\cite{hoyle2014privacy}, seeking to understand what makes a photo private and what participants said about their images.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{Screenavoider: Protecting Computer Screens from Ubiquitous Cameras~\cite{korayem2014screenavoider}}\\
-    2014 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{Screenavoider: Protecting Computer Screens from Ubiquitous Cameras~\cite{korayem2014screenavoider}}\\
+    2014 & & & \ding{51} & \ding{51} & & \ding{51} & \ding{51} & \ding{51} & \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Present a framework that controls the collection and disclosure of lifelogging datasets which contain computer screens and possible sensitive contents.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{PlaceAvoider: Steering First-Person Cameras away from Sensitive Spaces~\cite{templeman2014placeavoider}}\\
-    2014 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{PlaceAvoider: Steering First-Person Cameras away from Sensitive Spaces~\cite{templeman2014placeavoider}}\\
+    2014 & & & \ding{51} & \ding{51} & & \ding{51} & \ding{51} & \ding{51} & \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Introduce a prototype for owners of first-person cameras to 'blacklist' sensitive places (like bathrooms and bedrooms).}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{Privacy.Tag: Privacy Concern Expressed and Respected~\cite{bo2014privacy}}\\
-    2014 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{Privacy.Tag: Privacy Concern Expressed and Respected~\cite{bo2014privacy}}\\
+    2014 & & & \ding{51} & \ding{51} & \ding{51} & & \ding{51} & & \ding{51} \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Propose using QR code as privacy tag to link an individual with his photo sharing preferences. These preferences are based on web domains.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{Privacy Behaviors of Lifeloggers using Wearable Cameras~\cite{hoyle2014privacy}}\\
-    2014 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{Privacy Behaviors of Lifeloggers using Wearable Cameras~\cite{hoyle2014privacy}}\\
+    2014 & \ding{51} & & \ding{51} & & & \ding{51} & \ding{51} & \ding{51} & \ding{51} \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Conducted an \emph{in situ} user study on privacy behaviors of 36 participants who wore lifelogging devices for a week.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{Courteous Glass~\cite{jung2014courteous}}\\
-    2014 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{Courteous Glass~\cite{jung2014courteous}}\\
+    2014 & & & \ding{51} & \ding{51} & & \ding{51} & & & \ding{51} \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Wearable camera integrated with a FIR (far-infrared) imagers that turns off recording when new persons or specific gestures are detected.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{World-Driven Access Control for Continuous Sensing~\cite{roesner2014world}}\\
-    2014 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{World-Driven Access Control for Continuous Sensing~\cite{roesner2014world}}\\
+    2014 & & & \ding{51} & \ding{51} & & \ding{51} & \ding{51} & \ding{51} & \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Propose a general framework that allows objects to explicitly specify its access policies. Policy triggers can be visual indicators or anything that can be detected in other research works.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{In Situ with Bystanders of Augmented Reality Glasses~\cite{denning2014situ}}\\
-    2014 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{In Situ with Bystanders of Augmented Reality Glasses: Perspectives on Recording and Privacy-Mediating Technologies~\cite{denning2014situ}}\\
+    2014 & \ding{51} & & \ding{51} & & & \ding{51} & \ding{51} & \ding{51} & \ding{51} \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Investigate the privacy perspectives of individuals when they are bystanders around AR devices. Conducted 12 field sessions in caf\'es and interviewed 31 bystanders regarding their reactions to a co-located AR device.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{A Scanner Darkly: Protecting User Privacy From Perceptual Applications~\cite{jana2013scanner}}\\
-    2013 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{A Scanner Darkly: Protecting User Privacy From Perceptual Applications~\cite{jana2013scanner}}\\
+    2013 & & \ding{51} & \ding{51} & \ding{51} & & \ding{51} & \ding{51} & \ding{51} & \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Perceptual applications can only access transformed objects such as sketches, faces, etc.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{Enabling Fine-Grained Permissions for Augmented Reality Applications With Recognizers~\cite{jana2013enabling}}\\
-    2013 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{Enabling Fine-Grained Permissions for Augmented Reality Applications With Recognizers~\cite{jana2013enabling}}\\
+    2013 & & & \ding{51} & \ding{51} & & \ding{51} & & \ding{51} & \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Third party AR applications can only access high-level objects such as Skeleton, Hand Position, etc.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{PriSurv: Privacy Protected Video Surveillance System Using Adaptive Visual Abstaction~\cite{chinomi2008prisurv}}\\
-    2008 & & \ding{51} & & & \ding{51} & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{PriSurv: Privacy Protected Video Surveillance System Using Adaptive Visual Abstaction~\cite{chinomi2008prisurv}}\\
+    2008 & & \ding{51} & & \ding{51} & & & \ding{51} & \ding{51} & \ding{51} \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Propose a privacy control mechanism for surveillance videos based on closeness between content objects and content viewers. RFID tags are used to improve the detection of people in videos.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{Respectful Cameras: Detecting Visual Markers in Real-Time to Address Privacy Concerns~\cite{schiff2009respectful}}\\
-    2007 & & \ding{51} & & \ding{51} & & & \ding{51} & \ding{51} & \\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{Respectful Cameras: Detecting Visual Markers in Real-Time to Address Privacy Concerns~\cite{schiff2009respectful}}\\
+    2007 & & \ding{51} & & \ding{51} & & & \ding{51} & \ding{51} & \ding{51} \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{A video surveillance system that allows people who wish to remain anonymous wear colored markers such as hats or vests, and their faces will be blurred.}\\
     \hline
 
-    \rowcolor{lightgray}\multicolumn{10}{l}{Privacy Management for Portable Recording Devices~\cite{halderman2004privacy}}\\
+    \rowcolor{lightgray}\multicolumn{10}{p{19.5cm}}{Privacy Management for Portable Recording Devices~\cite{halderman2004privacy}}\\
     2004 & & & \ding{51} & & \ding{51} & & \ding{51} & \ding{51} & \\
     \cline{1-10}
-    \multicolumn{10}{l}{hello worl  dsaf fs fsa fds }\\
+    \multicolumn{10}{p{19.5cm}}{Propose an approach that closed closed devices can encrypt data together during recording utilizing short range wireless communication to exchange public keys and negotiate encryption key. Only by obtaining all of permissions from people who encrypt the recording can one decrypts it.}\\
 
     \hline \bottomrule
 
+    \caption{Mobile cameras include cameras in smartphones, AR, VR, lifelogging and other wearable devices. Computer vision methods may be assisted with extra sensors such as RFID tags~\cite{chinomi2008prisurv}, FIR imagers~\cite{jung2014courteous}. There are other factors like implementation layer (app level or os level) that are not listed due to space limitation.}
+    \label{tbl-relatedworks}
 %% if use table + adjustbox
   % \end{tabular}
   % \end{adjustbox}
@@ -116,7 +123,6 @@
 \end{longtable}
 
 
-\section{User Studies}
 
 \section{Proposed Solutions}
 
