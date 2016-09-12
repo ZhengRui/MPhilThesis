@@ -1,10 +1,17 @@
 \chapter{Related Works}\label{sec-related}
 
 \section{User Studies}
+Glass-style AR devices and lifelogging devices come into people's lives in recent years, bringing more and more privacy concerns among public, from the perspectives of both recorders and bystanders. Some user studies investigate these concerns by conducting privacy surveys and \emph{in situ} interviews~\cite{denning2014situ,hoyle2014privacy,hoyle2015sensitive,aditya2016pic}. Here we summarize some findings from these works:
 
+\begin{itemize}
+  \item All user studies find that most participants care about their appearance in recored contents, and welcome a consent mechanism so that they can have controls such as: Stop the recording when they don't want to be recorded; Obfuscation of their identities in recording-time and sharing-time.
+  \item Study in~\cite{hoyle2014privacy} says that lifeloggers care about the privacy of bystanders, and they prefer automated \emph{in situ} controls of privacy contents to relieve the burden of physical control.
+  \item Privacy is vague, and depends on many factors, which we name it as contexts, defined by primitives such as \emph{Who, What, When, Where, Why and How}. All studies confirm that there are many reasons that make contents private. A breakdown of potential design axes for privacy-mediating technologies is proposed in~\cite{denning2014situ}.
+\end{itemize}
 
+Inspired by the design axes proposed in~\cite{denning2014situ}, in Table~\ref{tbl-relatedworks} we reviewed related works by comparing some major factors such as their problem settings, technical solutions, etc.
 
-
+\newpage
 
 %% use table + adjustbox
 % \begin{table}[ht]
@@ -15,6 +22,18 @@
 %% or use longtable
 \setlength\LTleft{-1.7cm}
 \begin{longtable}{M{1cm}|M{1.2cm}|M{2.1cm}|M{1.5cm}|M{1.5cm}|M{2.1cm}|M{1.5cm}|M{2.1cm}|M{1cm}|M{1.5cm}}
+
+    \caption{Mobile cameras include cameras in smartphones, AR, VR, lifelogging and other wearable devices. Computer vision methods may be assisted with extra sensors such as RFID tags~\cite{chinomi2008prisurv}, FIR imagers~\cite{jung2014courteous}. There are other factors like implementation layer (app level or os level) that are not listed due to space limitation.}
+    \label{tbl-relatedworks} \\
+
+    \toprule \hline
+    \multirow{2}{1cm}[-0.5em]{year} & \multirow{2}{1.2cm}[-0.5em]{\centering privacy survey} & \multicolumn{2}{c|}{problem setting} & \multicolumn{2}{c|}{technical solution} & \multicolumn{2}{c|}{enforcement time} & \multicolumn{2}{c}{privacy object}\\
+    \cline{3-10}
+    & & video surveillance & mobile cameras & computer vision & cryptography & in-situ / run time & access / distribution & user & bystander\\
+    \hline
+    \endfirsthead
+
+    \multicolumn{10}{c}{{{\bfseries Table \thetable:} Continued from previous page}}\\
     \toprule \hline
     \multirow{2}{1cm}[-0.5em]{year} & \multirow{2}{1.2cm}[-0.5em]{\centering privacy survey} & \multicolumn{2}{c|}{problem setting} & \multicolumn{2}{c|}{technical solution} & \multicolumn{2}{c|}{enforcement time} & \multicolumn{2}{c}{privacy object}\\
     \cline{3-10}
@@ -113,8 +132,6 @@
 
     \hline \bottomrule
 
-    \caption{Mobile cameras include cameras in smartphones, AR, VR, lifelogging and other wearable devices. Computer vision methods may be assisted with extra sensors such as RFID tags~\cite{chinomi2008prisurv}, FIR imagers~\cite{jung2014courteous}. There are other factors like implementation layer (app level or os level) that are not listed due to space limitation.}
-    \label{tbl-relatedworks}
 %% if use table + adjustbox
   % \end{tabular}
   % \end{adjustbox}
@@ -122,10 +139,28 @@
 
 \end{longtable}
 
+\section{Solutions and Guidelines}
+As listed in Table~\ref{tbl-relatedworks}, we conclude previous research works from such aspects:
+
+\begin{itemize}
+  \item {\bf Problem Setting:} Previous researches focused on privacy issues in CCTV, after the spread of smartphones, research focus has been shifted to potential user privacy leakage caused by installed third party applications. A recent trend is the adoption of wearable devices, which make it harder for people to notice that they are being captured. Thus bystander privacy in such settings is gaining more attention these days.
+  \item {\bf Technical Solution:} Encryption and decryption are mostly used when fetching privacy policies, while recognition technologies are mainly used for detection of people and perception of context. Computer vision techniques are also used in policy enforcement stage. Extra economical sensors can be integrated to ease the hardness of computer vision tasks. Wireless technologies are used in some works for the broadcasting of bystanders' privacy policies.
+  \item {\bf Enforcement Time:} \emph{In-situ} control mechanisms pose high requirements of devices' computational power, however fast developments of hardwares and breakthroughs in computer vision encourage researches to try more \emph{in-situ} solutions. Bystander privacy control ideally requires an \emph{in-situ} solution, while user privacy concern usually surfaces at sharing time and is generically easier to be handled.
+  \item {\bf Privacy Object:} Just as other factors, user privacy and bystander privacy don't exclude each other. Essentially user privacy is just a special case of bystander privacy.
+  \item {\bf Other factors:} It is preferable for control mechanisms to be integrated in operation system or even hardware level. Most solutions are based on the assumption that users are trusted. Other design considerations include opt-in vs opt-out, policy push vs policy pull, etc. Each option has advantages and limitations, thus should be considered case by case.
+\end{itemize}
+
+Due to limitation in hardwares as well as algorithms, previous designs are mostly limited on specific settings and simple techniques, though many works mention that policies should be situational, individualized and dynamic. This motivates us to move further in the direction of providing a more general as well as practical control service. From the discussion of related works, we can see that privacy control system design is a complicate task. In current stage it is not possible to solve all problems in one shot, therefore Cardea's design is also limit in many ways, which are listed at the end of next section.
+
+\section{Possibilities and Challenges}
+Fig
 
 
-\section{Proposed Solutions}
+\begin{itemize}
+  \item Though not limited to, it starts from and aims at protecting bystander privacy.
+  \item tbc
 
-\section{Challenges}
+\end{itemize}
+
 
 \newpage
