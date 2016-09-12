@@ -150,17 +150,20 @@ As listed in Table~\ref{tbl-relatedworks}, we conclude previous research works f
   \item {\bf Other factors:} It is preferable for control mechanisms to be integrated in operation system or even hardware level. Most solutions are based on the assumption that users are trusted. Other design considerations include opt-in vs opt-out, policy push vs policy pull, etc. Each option has advantages and limitations, thus should be considered case by case.
 \end{itemize}
 
-Due to limitation in hardwares as well as algorithms, previous designs are mostly limited on specific settings and simple techniques, though many works mention that policies should be situational, individualized and dynamic. This motivates us to move further in the direction of providing a more general as well as practical control service. From the discussion of related works, we can see that privacy control system design is a complicate task. In current stage it is not possible to solve all problems in one shot, therefore Cardea's design is also limit in many ways, which are listed at the end of next section.
-
-\section{Possibilities and Challenges}
-Fig
-
+Due to limitation in hardwares as well as algorithms, previous designs are mostly limited on specific settings and simple techniques, though many works mention that policies should be situational, individualized and dynamic. This motivates us to move further in the direction of providing a more general as well as practical control service. From the discussion of related works, we can see that privacy control system design is a complicate task. In current stage it is not possible to solve all problems in one shot, therefore Cardea's design is also limit in such ways:
 
 \begin{itemize}
   \item Though not limited to, it starts from and aims at protecting bystander privacy.
-  \item tbc
-
+  \item Currently only computer vision methods are used, and it tries to provide an \emph{in situ} solution, but relies on a stable connection with a center server. Part of computations are offloaded to center server is because mobile phones can not afford to load all deep learning models and run all computer vision algorithms.
+  \item It is implemented in application layer, thus can not prevent users from using other applications to get raw camera data.
+  \item We choose opt-out policies for aesthetic reason, trying to let photographers enjoy the real world image while still take care of privacy concerns for bystanders who mind their appearances in that image.
 \end{itemize}
+
+\section{Possibilities and Challenges}
+
+The processing power of mobiles and computers are increasing extremely fast in recent years. Nvidia's Tegra Processors~\cite{links:Tegraproc} are used in many auto-pilot systems. Nvidia's Tegra X1 already achieves 1 teraflops 16bit floating points performance~\cite{links:Tegrax1}. Many high performance smartphones are now equipped with high end processors such as Qualcomm's Snapdragon 820s~\cite{links:Snapdragon820swiki}, which makes them able to run certain heavy computer vision algorithms that is impossible before. A first thought would be deploying state-of-the-art deep learning models on these platforms to extract more accurate context informations. However, context is an abstract concept and thus hard to be defined, thus Cardea is limited in how well context is represented in the design. The way users interact with a system is also important for acceptance of the system, how to ease the burden for bystanders to express their dynamic privacy preferences pose another challenge to our design. From implementation point of view, we have to take care of many things such as resource limitations, issues when scaling up, uncontrolled environments, etc. After an introduction of deep learning and convolutional neural networks in next chapter, we will give details of how we tackle these challenges in Chapter 4.
+
+
 
 
 \newpage
