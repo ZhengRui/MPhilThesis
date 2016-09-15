@@ -34,7 +34,7 @@ We highlight some of the breakthroughs brought by deep learning in recent years:
     \centering
     \includegraphics[width=0.45\textwidth]{figure/ch3-bioneuron.png}
     \includegraphics[width=0.45\textwidth]{figure/ch3-compneuron.png}
-    \caption{A  cartoon drawing of a biological neuron (left) and its mathematical model (right). Photo taken from~\cite{links:cs231n-nn1}}
+    \caption{A  cartoon drawing of a biological neuron (left) and its mathematical model (right). Photo taken from \emph{Module1: Neural Networks} in~\cite{links:cs231n}}
     \label{fig:ch3-neuron}
 \end{figure}
 
@@ -117,8 +117,24 @@ With appropriate loss function, a single hidden unit can function as a linear cl
     \label{fig:ch3-ann}
 \end{figure}
 
-\subsubsection{Training}
+\subsubsection{Backpropagation Algorithm}
+During the optimization process of loss function, we need to calculate the gradients with respect to all the weights and update them. A naive way is keep all the weights fixed and only tweak one weight to see how it changes loss, thus get its gradient. However, this method is very inefficient since it has to tweak order of the number of weights times to get gradients for all the weights. The efficient way to do this is backpropagation algorithm. Detailed derivations on backpropagation algorithm can be found on tutorials~\cite{links:nielsennnbook, links:cs231n}. We highlight some points here:
+\begin{itemize}
+\item It helps to think of the mapping from input to output that the neural network represents as a computational graph. Each node in this computational graph is simple operation like $+$, $*$, $\max$, or any operation like $\sigma$ that have a simple derivable gradients. In such way, any complicate mapping function is decomposed into simple unit operations, and backpropagation refers to the node by node backward propagation of gradients from loss to input using chain rule.
+\item There can be many paths from loss to any variable in the network, gradients flowed through all these paths backwards to this variable get added up when calculating gradient on this variable.
+\item In neural networks, the preactivations of a layer $z$ and activations of previous layer $o$ have relation $z = w^To$ where $w$ are the weights between these two layers, it can be seen that gradients for $w$ are proportional to activations $o$ of previous layer, this implies that the scale of the data has an effect on the magnitude of gradients for the weights. When input data is not scaled well, the gradient can be huge, so data preprocessing is a good practice.
+\end{itemize}
 
+\subsubsection{Training}
+Below we list most of the practical concerns when training neural networks:
+\begin{description}[labelindent=1cm]
+  \item[Data Preprocessing] Common data preprocessing steps include mean subtraction, normalization, PCA whitening~\cite{links:ufldlpca}. Mean subtraction is to zero-center the data. Normalization refers to normalizing the data dimensions so that they are of approximately the same scale. PCA whitening is to first apply PCA on the dataset, followed by a normalization step on the principle components. For most computer vision tasks with big image datasets as input, mean subtraction is enough.
+  \item[Weight Initialization] Mostly used weight initialization strategy is random sampling from a damped gaussian distribution. Improvements on randomly initialization are focused on calibrating the variances with respect to number of inputs for each neuron such that its output's variable does not blow up. For ReLU units, it is recommended to draw weights from $\sqrt{\frac{2.0}{n}}\mathcal{N}(0,1)$ as suggested in~\cite{he2015delving}. A recently developed technique called batch normalization explicitly forces each neuron's activations for a minibatch to take on a unit gaussian distribution through whitening among this minibatch~\cite{ioffe2015batch}. Batch normalization can be interpreted as doing preprocessing at every layer of the network, but integrated into the network itself in a differentiable manner. In practice networks that use batch normalization are significantly more robust to bad initialization.
+  \item[Regularization] $\mathcal{L}2$ regularization $\frac{1}{2}\lambda w^2$ is still the most commonly used regularization term. Other than that, $\mathcal{L}1$ regularization $\lambda |w|$ leads to sparsity in weights, it is useful when the problem is concerned with explicit feature selection. Dropout~\cite{srivastava2014dropout} is a simple but effective way of regularization, in practice it smears activations with a certain probability during training, which can be interpreted as sampling a neural network within the full neural network, and only updating the parameters of the sampled network based on the input data, therefore effectively there are many more neural nets working as an ensemble to eventually perform the classification.
+  \item[Loss Functions] In classification problems, most commonly used data loss functions are hinge loss and cross-entropy loss. Hinge loss is defined as $L_i = \sum_ {j\neq y_i} \max(0, f_j-f_{y_i}+1)$ where $L_i$ and $y_i$ refer to loss and ground truth label of $i$th sample, $f_j$ is the output score for class $j$. Hinge loss is used with SVM classifier. Cross-entropy loss is defined as $L_i = -\log(\frac{e^{f_{y_i}}}{\sum_je^{f_j}})$, and used with Softmax classifier. For regression problems, $\mathcal{L}2$ distance $L_i = ||f - y_i||_2^2$ are normally used. Whenever possible, it is recommended to see if a regression problem can be morphed to a classification problem by quantization of outputs into bins, because classification is an easier task and gives confidences of each class.
+  \item[Optimization] There are many optimization options when training deep neural networks. Starting from vanilla SGD (stochastic gradient descent), integration of momentum improves convergence rate and adaptive algorithms ease the pain of tuning the learning rates. \cite{links:sgdoptimization}~gives a comprehensive overview of related algorithms.
+  \item[Miscellous] To find good hyperparameters such as initial learning rate, regularization strength, it is suggested to use random search over grid search~\cite{bergstra2012random} and stage the search from coarse to fine. Bagging of neural networks trained independently is a reliable approach to improve the performance.
+\end{description}
 
 
 \section{Convolutional Neural Networks}
