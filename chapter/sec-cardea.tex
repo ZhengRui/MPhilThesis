@@ -76,8 +76,19 @@ Our training step is just a standard fine-tuning process, which is extensively u
 Other than improving the validation accuracy from 0.56 to 0.57, shuffling also makes training converges faster. With augmentation to relieve category imbalance issue, the classifier can finally achieve 0.600 validation accuracy on the 59 categories. There is no other benchmarking result specifically on the subset we choose, but recent benchmark gives 53\%-56\% validation accuracy on the new Places2 dataset with 365 categories~\cite{links:places2pre}, suggesting our model is competitive. The higher validation accuracy of our model is due to the smaller scale of classification problem we are dealing with.
 
 \subsubsection{Prediction}
-For prediction, we get probability of a group by summing up the probabilities of all categories belonging to this group, and output the most probable group as prediction of an image. Our model's group prediction accuracy for the validation set is . Fig~\cite{} shows some prediction examples. As seen from the examples, given an image, the predicted category probabilities are usually stratified to few categories within same group, thus group prediction is resilient to perturbation of category prediction. The way we group categories can be seemed as a hard-coded clustering step, which makes prediction more robust to noise. The failure cases are mostly due to natural context ambiguity from a image (e.g. image with object in focus, therefore not enough hints for scene inference). Labeling the 342 non selected categories as extra group will amplify the ambiguity issue, even for images with less ambiguity, doing so will stratify probabilities to the extra group and lead to wrong prediction. In other words, a 59 way classifier leads to higher recall for selected scenes and grouping leads to higher accuracy.
 
+\begin{figure}[!htbp]
+    \makebox[\textwidth]{
+        \centering
+        \raisebox{-0.5\height}{\includegraphics[width=0.7\textwidth]{figure/ch4-scnCateConfu.pdf}}
+        \hspace{-1cm}%
+        \raisebox{-0.5\height}{\includegraphics[width=0.6\textwidth]{figure/ch4-scnGrpConfu.pdf}}
+    }
+    \caption{Confusion matrices for category prediction and group prediction.}
+    \label{fig:ch4-scnconfumat}
+\end{figure}
+
+For prediction, we get probability of a group by summing up the probabilities of all categories belonging to this group, and output the most probable group as prediction of an image. Our model's group prediction accuracy for the validation set is 82.8\%. Fig~\cite{} shows some prediction examples. As seen from the examples, given an image, the predicted category probabilities are usually stratified to few categories within same group, thus group prediction is resilient to perturbation of category prediction. The way we group categories can be seemed as a hard-coded clustering step, which makes prediction more robust to noise. The failure cases are mostly due to natural context ambiguity from a image (e.g. image with object in focus, therefore not enough hints for scene inference). Labeling the 342 non selected categories as extra group will amplify the ambiguity issue, even for images with less ambiguity, doing so will stratify probabilities to the extra group and lead to wrong prediction. In other words, a 59 way classifier leads to higher recall for selected scenes and grouping leads to higher accuracy. This is also reflected in confusion matrices shown in Fig~\ref{fig:ch4-scnconfumat}, category confusion matrix shows some clustering structure which is in accordance with the groups we manually assigned. However, only using top 1 category for prediction sacrifices prediction accuracy, which can be avoided by grouping as shown in group confusion matrix.
 
 
 \subsection{Face Recognition}
