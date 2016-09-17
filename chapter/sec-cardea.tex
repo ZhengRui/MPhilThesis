@@ -84,7 +84,7 @@ Other than improving the validation accuracy from 0.56 to 0.57, shuffling also m
         \hspace{-1cm}%
         \raisebox{-0.5\height}{\includegraphics[width=0.6\textwidth]{figure/ch4-scnGrpConfu.pdf}}
     }
-    \caption{Confusion matrices for category prediction and group prediction.}
+    \caption{Confusion matrices for category prediction (left) and group prediction (right).}
     \label{fig:ch4-scnconfumat}
 \end{figure}
 
@@ -92,12 +92,54 @@ For prediction, we get probability of a group by summing up the probabilities of
 
 
 \subsection{Face Recognition}
+Like scene classification, we select a pre-trained model for face recognition task. More specifically, the pre-trained model will serve as face feature extractor, and we will update the face classifier whenever new users register in Cardea and upload their face features. There are already many deep neural networks deployed in commercial products, like Megvii's Face++~\cite{zhou2013extensive}, Facebook's Deepface~\cite{taigman2014deepface}, Google's Facenet~\cite{schroff2015facenet}, Sensetime's Deepid~\cite{sun2015deepid3}. OpenFace~\cite{amos2016openface} is an open source project that is gaining attentions in recent months, it is based on Torch~\cite{links:torch7}. Because Cardea's other modules are under Caffe framework, we limit our options on open sourced Caffe models. The models in our consideration are VGG face recognition model~\cite{parkhi2015deep} and Lightened CNN face recognition model~\cite{wu2015lightened}.
+
+\begin{figure}[!htbp]
+    \makebox[\textwidth]{
+        \centering
+        \raisebox{-0.5\height}{\includegraphics[width=0.6\textwidth]{figure/ch4-tsnevggfc8.png}}
+        \raisebox{-0.5\height}{\includegraphics[width=0.62\textwidth]{figure/ch4-tsnemfmeltwise_fc1.png}}
+    }
+    \caption{t-SNE visualization of VGG \emph{fc8} layer features and Lightened CNN \emph{fc1} layer features.}
+    \label{fig:ch4-tsnevggvsmfm}
+\end{figure}
+
+To compare performance of features extracted from the two models, we run t-SNE visualization~\cite{maaten2008visualizing} on the features of a small dataset we previously collected for emotion sensing. Fig~\ref{fig:ch4-tsnevggvsmfm} shows the t-SNE visualization result. It seems VGG feature and Lightened CNN feature have similar performance, at least on this small dataset. Though it is found that comparing to Lightened CNN model, VGG model is more robust to variations and its features show better transferability~\cite{ghazi2016comprehensive}, the model size is more than 500MB, 10 times bigger than Lightened CNN model. And the released VGG model has a feature dimension of 4096, while Lightened CNN model has a feature dimension of 256. Our experiment on different Android smartphones shows it takes 10 times longer to extract VGG features. Table~\ref{tbl-forwardingtime} shows the forwarding time we tested on different smartphones. It can be seen VGG model consumes much more memory that it can only run on phones with memory larger than 3GB. Due to above concerns, we use Lightened CNN model in our implementation.
+
+\begin{table}[tb]
+\centering
+\caption{Time of single facial feature extraction and batch facial feature extraction (10 faces).}
+\label{tbl-forwardingtime}
+\begin{tabular}{lrrr}
+\toprule
+ & Xiaomi Mi 3W & Galaxy Note 4 & Xiaomi Mi 5\\
+ & {\small Snapdragon 800} & {\small Snapdragon 805} & {\small Snapdragon 820}\\
+ & {\small 2GB RAM} & {\small 3GB RAM} & {\small 4GB RAM}\\
+ \midrule
+1 VGG CNN & N/A & N/A & $\sim 2780$ ms \\
+10 VGG CNN & N/A & N/A & $\sim 26740$ ms \\
+1 Lightened CNN & $\sim 508$ ms & $\sim 330$ ms & $\sim 303$ ms \\
+10 Lightened CNN & $\sim 6602$ ms & $\sim 3971$ ms & $\sim 2031$ ms \\
+ \bottomrule
+
+\end{tabular}
+\end{table}
+
+
+\subsubsection{Detection and Alignment}
+Lightened CNN model takes aligned face as input, requiring that the distance between midpoint of eyes and midpoint of mouth is 48, and $y$ value of midpoint of eyes is 40, as shown in Fig~\ref{}. We use OpenCV's haar cascade~\cite{links:opencv,viola2001rapid} frontal face detector. The limitation it brings to Cardea is only frontal faces will be detected and recognized. We set \emph{minNeighbors} (the parameter specifying how many neighbors each candidate rectangle should have to retain it) to be 3 to ensure a relative high recall for face detection. To remove false positive, we further apply skin color filter (range $[0, 48, 60] - [30, 255, 255]$ in HSV color space) on retained rectangles. Following that, we use Dlib library's HOG~\cite{links:dlib,dalal2005histograms} based face detector as a second stage filter. Note that Dlib's face detector has higher accuracy comparing to OpenCV's face detector, but is much slower if applied directly on a high resolution image, therefore it is used as a filter on small rectangular areas. Dlib's facial landmarks detector~\cite{links:dlibfacepose} is also used in later face alignment stage, it can detect 68 facial landmarks~\cite{links:dlibfacelandmarkspos, links:dlibfacelandmarkscoords}. With the detected landmarks and required alignment condition about inputs to the CNN model, we can calculate the homography matrix that is finally used to align faces. The steps for detection and alignment is shown in Fig~\ref{}, and we implemented it as a JNI library for Android platform~\cite{links:facealignjni}.
+
+{\bfseries add figure for detection and alignment steps}
+
+\subsubsection{Face Matching}
 
 
 \subsection{Gesture Recognition}
 
 
 \subsection{Deployment on Android}
+
+forwarding time
 
 \subsection{System Integration}
 
