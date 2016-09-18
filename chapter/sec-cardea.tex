@@ -132,25 +132,10 @@ Lightened CNN model takes aligned face as input, requiring that the distance bet
 {\bfseries add figure for detection and alignment steps}
 
 \subsubsection{Recognition}
-All the facial features uploaded by registered users are used to train a classifier in the cloud server, using LIBSVM library~\cite{chang2011libsvm}. During training, we set the parameter to enable probability estimations of classes $p_i, i\in{1, \cdots, n}$. In prediction time for each facial feature, if $\max_ip_i <= 0.3$, then we treat it as from an unknown person who hasn't registered in Cardea, otherwise it is from the $i$th user and his privacy preference will be fetched for further processing.
+All the facial features uploaded by registered users are used to train a classifier in the cloud server, using LIBSVM library~\cite{chang2011libsvm}. During training, we set the parameter to enable probability estimations of classes $p_i, i\in{1, \cdots, n}$. In prediction time for each facial feature, if $\max_ip_i \leq 0.3$, then we treat it as from an unknown person who hasn't registered in Cardea, otherwise it is from the user who has the highest probability and his privacy preference will be fetched for further processing.
 
 \subsubsection{Matching}
-Face matching occurs when a recognized user $A$ has also specified and uploaded features of person $B$ with whom he doesn't want to be captured, it is to determine whether $B$ also appears in this captured image. Note that $B$ is not necessarily a registered user of Cardea. Comparing to recognition, matching is a problem with much smaller scale, because number of persons like $B$ for each image is very limited. Fig~\ref{alg:facerecmatch} shows details about the recognition and matching process.
-
-\begin{algorithm}[H]
-    \SetKwInOut{Input}{Input}
-    \SetKwInOut{Output}{Output}
-
-
-    \Input{Features $f_l$ of aligned faces $l\in {1,\cdots,L}$}
-    \Output{Identification $u_l$ if $u_l\in {1,\cdots,N}$ and matching $m_l$ if $u_l = \mathit{unknown}$}
-
-    
-
-
-    \caption{Face recognition and matching}
-    \label{alg:facerecmatch}
-\end{algorithm}
+Face matching occurs when a recognized user $A$ has also specified and uploaded features of person $B$ with whom he doesn't want to be captured, it is to determine whether $B$ also appears in this captured image. Note that $B$ is not necessarily a registered user of Cardea, and it is require that $A$ should upload at least 10 facial features of $B$. Then feature $f_l$ from other faces $l\neq A$ in the image will be compared with $B$'s features. For each face $l$, using cosine similarity as distance metric and a distance threshold value 0.4 as well as a ratio threshold value 0.6, we can get the ratio of $B$'s features that have a distance with $f_l$ smaller than distance threshold, if the ratio is higher than ratio threshold, then $B$ appears with $A$ in the same image.
 
 
 \subsection{Gesture Recognition}
