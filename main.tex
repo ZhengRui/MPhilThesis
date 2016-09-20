@@ -30,6 +30,9 @@
 
 \newcommand{\red}[1]{#1}
 \newcommand{\tab}[1]{\hspace{3mm}}
+\newcommand{\vcenteredinclude}[1]{\begingroup
+  \setbox0=\hbox{\includegraphics[height=\baselineskip, keepaspectratio]{#1}}%
+\parbox{\wd0}{\box0}\endgroup}
 
 
 \usepackage[backend=biber, sorting=none]{biblatex}
