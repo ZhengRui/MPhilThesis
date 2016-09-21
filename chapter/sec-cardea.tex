@@ -11,10 +11,12 @@ Recalling related works in Chapter 2, what motivates the design of Cardea are th
 
 To achieve these objectives, we propose following solution:
 \begin{itemize}
-\item explain what composes context in Cardea
-\item registration of privacy preferences
-\item hand gesture for flexibility
+\item We combine GPS location, grouped scene categories and accompanied persons as context that can better represent people's privacy concerns than previous methods. As a result we are able to provide more general as well as finer granularity privacy preference settings for users.
+\item We use cloud server to host individualized privacy preferences, and user's preference is binded with his facial features. In this way his raw visual information stays locally, preventing the case of visual privacy leakage from hacked servers.
+\item Other than a simple interface provided to users to update their privacy preferences, hand gestures like \vcenteredinclude{figure/ch4-yesgesticon.png} and \vcenteredinclude{figure/ch4-nogesticon.png} can be used by user to actively speak out about his preference in the capturing moment, enriching the interaction and adding more flexibilities.
 \end{itemize}
+As introduced in chapter 3, breakthroughs made by deep learning community in many computer vision problems such as image classification, face recognition and object detection have guided the proposed solution and shed lights on its practicability.
+
 
 \begin{table}[tb]
 \centering
@@ -23,24 +25,23 @@ To achieve these objectives, we propose following solution:
 \begin{tabular}{ll}
 \toprule
 Scene category & Scenes                                                  \\ \midrule
-Eating         & banquet hall, beer garden, bistro, cafeteria,       \\
-               & coffee shop, diner restaurant, food court, sushi bar  \\ \midrule
-Entertainment  & ballroom, bar, discotheque, pub                         \\ \midrule
-Shopping       & bazzar, clothing store, department store,             \\
-               & flea market, florist shop, general store,            \\
-               & gift shop, jewelry shop, market, shoe shop,              \\
-               & shopping mall, supermarket                           \\ \midrule
-Working        & classroom, conference, cubicle, lecture room,           \\
-               & library, office, reading room                        \\ \midrule
-Public places  & crosswalk, downtown, field road, forest, freeway       \\
-               & park, picnic area, street                            \\ \midrule
-Transportation & airplane cabin, airport, bus station, bus interior,   \\
-               & subway station, train station, railroad track         \\ \midrule
-Exhibition     & art gallery, museum                                  \\ \midrule
-Religion       & cathedral, chapel, church, mosque, pulpit, temple     \\ \midrule
-Illness        & hospital, nursing home                               \\ \midrule
-Nudity         & bathroom, beach, coast, lagoon, lavatory,            \\
-               & swimming pool, shower, jacuzzi                       \\ \bottomrule
+Eating         & bistro/indoor, bistro/outdoor, cafeteria, coffee\_shop, \\
+               & diner/outdoor, dining\_hall, dining\_room, fastfood\_restaurant, food\_court, \\
+               & restaurant, restaurant\_patio, sushi\_bar            \\ \midrule
+Entertainment  & bar, discotheque, pub/indoor                         \\ \midrule
+Shopping       & bazaar/indoor, bazaar/outdoor, clothing\_store, general\_store/indoor, \\
+               & jewelry\_shop, shoe\_shop, shopping\_mall/indoor, supermarket  \\ \midrule
+Work           & conference\_center, conference\_room, cubicle/office, library/indoor, office, \\
+               & office\_cubicles, reading\_room                      \\ \midrule
+Public         & park, street                                         \\ \midrule
+Mobility       & airplane\_cabin, airport\_terminal, bus\_interior, bus\_station/indoor, \\
+               & subway\_station/platform, train\_interior, train\_station/platform \\ \midrule
+Exhibition     & art\_gallery, museum/indoor                          \\ \midrule
+Religion       & cathedral/indoor, cathedral/outdoor, church/indoor, church/outdoor, mosque/outdoor, \\
+               & pulpit, temple/east\_asia, temple/south\_asia        \\ \midrule
+Illness        & hospital, hospital\_room, nursing\_home                \\ \midrule
+Nudity         & bathroom, beach, jacuzzi/indoor, sauna, shower, \\
+               & swimming\_pool/indoor, swimming\_pool/outdoor        \\ \bottomrule
 \end{tabular}
 \end{table}
 
