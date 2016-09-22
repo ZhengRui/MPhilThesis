@@ -182,12 +182,12 @@ VGG group has shared a comprehensive dataset of hand images collected from vario
 
 \begin{itemize}
 \item First train a hand detector using this dataset, then train another hand gesture classifier using other commonly used gesture datasets and pipe them together.
-\item Take this dataset as a subset of images with "normal" gestures, then prepare extra images with "yes" and "no" gestures including annotations by ourselves, and train a "normal/yes/no" gesture detector end-to-end.
+\item Take this dataset as a subset of images with "natural" gestures, then prepare extra images with "yes" and "no" gestures including annotations by ourselves, and train a "natural/yes/no" gesture detector end-to-end.
 \end{itemize}
 
-The first solution is not an end-to-end solution, and the specific "yes" and "no" gestures may not be included in those standard gesture datasets, then we will still need to prepare our specific gesture dataset like in second solution. Therefore, we choose the second solution, based on the observation and also assumption that annotated hands in VGG's hand dataset are in normal relaxing modes, thus will not be treated as "yes" or "no" gestures. The annotations of VGG dataset are tilted rectangles shown as yellow ones in Fig~\ref{fig:ch4-gesturedataset}, we re-annotate the dataset using bounding boxes of the original annotations shown as blue rectangles.
+The first solution is not an end-to-end solution, and the specific "yes" and "no" gestures may not be included in those standard gesture datasets, then we will still need to prepare our specific gesture dataset like in second solution. Therefore, we choose the second solution, based on the observation and also assumption that annotated hands in VGG's hand dataset are in natural relaxing modes, thus will not be treated as "yes" or "no" gestures. The annotations of VGG dataset are tilted rectangles shown as yellow ones in Fig~\ref{fig:ch4-gesturedataset}, we re-annotate the dataset using bounding boxes of the original annotations shown as blue rectangles.
 
-We crawled 527 images with "yes" hand gestures, and 363 images with "no" hand gestures. Note that in a crawled image, it may contain different types of hand gestures as shown in Fig~\ref{fig:ch4-gesturedataset}, which is not a problem so long as gesture types are annotated correctly (\emph{remind} that all gestures in VGG dataset are treated as "normal" class). These images are crawled from Google and Flickr image search with keywords such as "victory sign", "stop gesture", "palm gesture" and so on, many of them are focused on the hands thus don't contain many background pixels. We rescale these images in different scales and then pad zeros on rescaled images. In Faster-RCNN python implementation~\cite{links:pyfasterrcnn}, an input image is rescaled to around $1000\times 1000$ before fed to region proposal network. If without padding data augmentation step, the bounding boxes of hand gestures will be huge in many crawled images that are focused on hands, which makes the learned model not able to detect small hand gestures and also not perform well on the regression of large hand gestures. Another reason for the padding step is to counter data imbalance of three classes. After augmentation, we have a dataset of 13843 images, including 5628 images from VGG dataset, 4712 augmented images mostly with "yes" gestures and 3503 augmented images mostly with "no" gestures. Fig~\ref{fig:ch4-gesturedataset} shows some sample images with annotations from this composed dataset. We wrote a tool~\cite{links:imgannota} to annotate the crawled images.
+We crawled 527 images with "yes" hand gestures, and 363 images with "no" hand gestures. Note that in a crawled image, it may contain different types of hand gestures as shown in Fig~\ref{fig:ch4-gesturedataset}, which is not a problem so long as gesture types are annotated correctly (\emph{remind} that all gestures in VGG dataset are treated as "natural" class). These images are crawled from Google and Flickr image search with keywords such as "victory sign", "stop gesture", "palm gesture" and so on, many of them are focused on the hands thus don't contain many background pixels. We rescale these images in different scales and then pad zeros on rescaled images. In Faster-RCNN python implementation~\cite{links:pyfasterrcnn}, an input image is rescaled to around $1000\times 1000$ before fed to region proposal network. If without padding data augmentation step, the bounding boxes of hand gestures will be huge in many crawled images that are focused on hands, which makes the learned model not able to detect small hand gestures and also not perform well on the regression of large hand gestures. Another reason for the padding step is to counter data imbalance of three classes. After augmentation, we have a dataset of 13843 images, including 5628 images from VGG dataset, 4712 augmented images mostly with "yes" gestures and 3503 augmented images mostly with "no" gestures. Fig~\ref{fig:ch4-gesturedataset} shows some sample images with annotations from this composed dataset. We wrote a tool~\cite{links:imgannota} to annotate the crawled images.
 
 \begin{figure}[!htbp]
     \centering
@@ -200,6 +200,14 @@ We crawled 527 images with "yes" hand gestures, and 363 images with "no" hand ge
 Using the composed dataset, we fine-tune the \emph{conv3\_1} and up layers of VGG16 pre-trained model provided by Faster-RCNN library, jointly with region proposal layers and detection layers that are not part of VGG16 pre-trained model. Features from \emph{conv5\_3} layer of VGG16 network are shared by region proposal network (RPN) and Fast-RCNN~\cite{girshick2015fast} detection network, RPN uses them to generate proposals, and region of interest (ROI) pooling layer in detecting network uses them for bounding box regression and classification. There are two methods to train a shared feature extraction network. One is an alternating optimization method with following steps: \ding{182} Train an RPN $M_1$ initialized from VGG16 pre-trained model $M_0$, \ding{183} Generate training proposals $P_1$ using RPN $M_1$, \ding{184} Train Fast R-CNN model $M_2$ on proposals $P_1$ initialized from $M_0$, \ding{185} Train RPN $M_3$ from $M_2$ without changing convolutional layers, \ding{186} Generating proposals $P_2$ using RPN $M_2$, \ding{187} Train Fast R-CNN model $M_4$ on proposals $P_2$ initialized from $M_3$ without changing convolutional layers, \ding{187} Add $M_3$'s RPN layers to Fast R-CNN model $P_2$. Another method is an approximate joint optimization method by training with stochastic gradient descent as usual, which is easier, faster and achieves similar performance~\cite{links:pyfasterrcnn}, so we use the second training procedures.
 
 \subsubsection{Prediction}
+During prediction, we set Non-Maximum Suppression (NMS) threshold as 0.4 and confidence level threshold as 0.7. Figure~\ref{fig:ch4-gestpredictemp} shows some examples of gesture detection and recognition results in natural environment. It can be seen that the trained model can handle cluttered background such as in shopping environment, and indoor dark lighting condition. It is interesting to notice that bounding boxes for "natural" hands are bigger, reflecting the fact that we select re-annotated the VGG dataset for "natural" class using bounding boxes of the original annotations. The model has a good recall in terms of hand detection, however, its gesture recognition is sensitive to motion blur, palm angles and gesture size. We think the good recall of hands comes from the comprehensive VGG dataset, and the not so good recognition result is because the "yes/no" dataset we composed does not have a good quality because gestures are focused in many images, especially for "no" gestures, which is reflected by the observation that "yes" gesture recognition performs better than "no" gesture.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figure/ch4-gestpredemp.png}
+    \caption{Examples of gesture detection and recognition.}
+    \label{fig:ch4-gestpredictemp}
+\end{figure}
 
 
 
@@ -208,44 +216,49 @@ Using the composed dataset, we fine-tune the \emph{conv3\_1} and up layers of VG
 
 Ideally, for a privacy control framework, we prefer a design that does not require cloud server and all the algorithms run locally on mobile devices. In the current design and implementation, cloud server exists mainly for two reasons: \ding{182} Storage center for profiles and hosting face recognition model; \ding{183} RPN in gesture recognition task is written in Python language, thus gesture recognition can not run on Android smartphones easily. However, these are not hard restrictions, possible improvements are discussed in Chapter 5.
 
-The deployment of Caffe models for scene classification and facial feature extraction is based on Caffe-android-library~\cite{links:caffeandroidlib}, we modified its code~\cite{links:caffeandroidlibzr} to support loading multiple Caffe models, batch feature extraction, and only forwarding to a specified layer during feature extraction, which saves useless computations from fully connected layers. The deployed scene classification model (based on AlexNet structure) has a size of 230MB, which is not small. However, its prediction is very fast, and can be easily fitted into the time slot of waiting response from cloud server. The facial feature extraction model (based on Lightened CNN structure) has a relatively bearable size of 33MB. Comparing to AlexNet, Lightened CNN model has smaller filter sizes, but with many more feature maps, therefore in run time, Lightened CNN model consumes about 1GB memory, which makes it not able to run on smartphones with less than 2GB memory~\ref{tbl-forwardingtime}. Possible ways to decrease model size and optimization of resource consumptions are also discussed in next chapter. Other lighter models we deployed on android include OpenCV face cascading model (less than 1MB), and shape predictor (90MB) in Dlib facial landmark detection.
+The deployment of Caffe models for scene classification and facial feature extraction is based on Caffe-android-library~\cite{links:caffeandroidlib}, we modified its code~\cite{links:caffeandroidlibzr} to support loading multiple Caffe models, batch feature extraction, and only forwarding to a specified layer during feature extraction, which saves useless computations from fully connected layers. There are other libraries for deploying neural networks on mobile, such as Torch-android~\cite{links:torchandroid} and MXNet~\cite{links:mxnetmobile}. The deployed scene classification model (based on AlexNet structure) has a size of 230MB, which is not small. However, its prediction is very fast, and can be easily fitted into the time slot of waiting response from cloud server. The facial feature extraction model (based on Lightened CNN structure) has a relatively bearable size of 33MB. Comparing to AlexNet, Lightened CNN model has smaller filter sizes, but with many more feature maps, therefore in run time, Lightened CNN model consumes about 1GB memory, which makes it not able to run on smartphones with less than 2GB memory~\ref{tbl-forwardingtime}. Possible ways to decrease model size and optimization of resource consumptions are also discussed in next chapter. Other lighter models we deployed on android include OpenCV face cascading model (less than 1MB), and shape predictor (90MB) in Dlib facial landmark detection.
 
 
 \subsection{System Integration}
 
-\begin{figure}[!htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figure/ch4-reg.png}
-    \caption{Registration interface}
-    \label{fig:ch4-reg}
-\end{figure}
-
-Fig~\ref{fig:ch4-cardeadataflow} gives the dataflow of Cardea:
-
-
-\begin{description}[leftmargin=0cm]
-  \item[{Registration}] The interface of registration for bystanders is shown in Fig~\ref{fig:ch4-reg}
-
-
-\end{description}
-
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{figure/ch4-cardeadataflow.pdf}
+    \includegraphics[width=0.6\textwidth]{figure/ch4-cardeadataflow.pdf}
     \caption{Dataflow of Cardea}
     \label{fig:ch4-cardeadataflow}
 \end{figure}
-message package header
 
-screen shots
+Fig~\ref{fig:ch4-cardeadataflow} shows the detailed structure and dataflow of Cardea, which is mainly composed of the following steps:
 
-decision tree
+\begin{description}[leftmargin=0cm]
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figure/ch4-reg.png}
+    \caption{Registration and profile updating interface}
+    \label{fig:ch4-reg}
+\end{figure}
+
+  \item[{Registration and Profile updating:}] The interface of registration for bystanders and updating of profiles is shown in Fig~\ref{fig:ch4-reg}. He is able to select one or more scene categories, one location for control, as well as enable gestures or not. In two cases his facial features will be packaged with his privacy preferences: one is in registration time and the other is when he wants to update his facial features in the cloud. This registration and updating message will be send to server, if it is an updating message without feature updating, then his user profile in cloud will be updated immediately and he will receive a "success" notification, otherwise this message will be first buffered in a profile cache.
+
+  \item[{Face classifier updating:}] In the server, the face classifier will be updated intermittently. For every time interval $\Delta T$, if there is cached messages that brings new facial features, it will \ding{182} block the queue of prediction messages from doing face recognition, \ding{183} merge profile cache with profile database, \ding{184} retrain a face classifer and \ding{185} unblock queued prediction messages.
+
+  \item[{Image capturing:}] When a recorder uses Cardea to take a image, extracted facial features, GPS coordinate as well as face-blurred image will be packaged as prediction message and sent to server for processing. In the server side, after faces recognition and profiles retrieval, it will start the cloud part of decision making process for every bounding box, returned to the client side is a decision mask that specifies among all the detected faces, which should be blurred, which should be kept and which should be further determined based on the scene results calculated on the client side. In client side, while waiting for response from server it will calculate the scene result. With received decision mask, it makes final decisions on every face and enforces the privacy protection actions complied with everyone's preference.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figure/ch4-decisiontree.pdf}
+    \caption{Steps of decisions about actions to be applied on detected faces.}
+    \label{fig:ch4-decisiontree}
+\end{figure}
+
+  \item[{Decision making:}] Fig~\ref{fig:ch4-decisiontree} gives the detailed decision steps. Note that in this process, we need to match a detected gesture with the right face or people who issued the gesture, currently we simply take the nearest face of a detected gesture as the person who issued this gesture, thus it requires the user to put his hand near his face when sending "yes/no" gestures. As seen from the figure, when the detected face is recognized as a registered user, and context including location, scene, presence of other people and gesture matched with recognized user's profile, this detected face will be removed. For other cases, the face will be kept but it may cause removal of other faces in the face matching step.
 
 
+  \item[{Concurrent requests:}] To enable concurrent requests from different client apps, we implement multiple "recognition" workers to process the queued messages from all the clients, recognition results from different workers will be collected and put into a result queue, followed by multiple "mailing" workers to make decision masks and mail the decision masks back to corresponding blocked client threads. We tested with a server configuration - "Intel i7-5820K CPU, 16GB RAM, GeForce 980Ti Graphic Card(6GB RAM)" and the campus's Wi-Fi network, the time from start sending message to receive server's response is $1-2s$, depending on the message type. The total time from capturing moment to the enforcement of protection actions is $2-4s$, depending on how many faces detected. Most time is spent on facial feature extraction and message data transmission. Note that processing in the server side is relatively fast, gesture recognition of one image takes $200-300ms$, while the time spent on SVM face classifier and face matching is negligible. With 6GB GPU RAM, the server can serve 3 gesture recognition workers at the same time, supporting 5-10 concurrent requests. The implementation of Cardea is hosted in~\cite{links:cardeaproj}.
 
-The implementation of Cardea is hosted in~\cite{links:cardeaproj}.
-
+\end{description}
 \section{Evaluation}
 
 
