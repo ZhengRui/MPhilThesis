@@ -29,7 +29,9 @@ As introduced in chapter 3, breakthroughs made by deep learning community in man
   \item[{\bfseries Cloud server:}] The cloud server serves as two roles: \ding{182} When receives requests from Bystander applications, it will store/update users' profiles, and training/updating system's face recognition model automatically; \ding{183} When receive requests from Recorder applications, it will initiate face and gesture recognition tasks, as well as partial decision making based on recognition results, and send these intermediate decision results to client for final step of decision making.
 \end{description}
 
-Implementations of each module, how Cardea allocates tasks between mobile and cloud, integration, usage and performance evaluation of the whole system are discussed throughly in following sections.
+% Implementations of each module, how Cardea allocates tasks between mobile and cloud, integration, usage and performance evaluation of the whole system are discussed throughly in following sections.
+
+Implementations and evaluation of each module, how Cardea allocates tasks between mobile and cloud, integration and user interactions are discussed in following sections.
 
 \begin{table}[tb]
 \centering
@@ -58,10 +60,7 @@ Nudity         & bathroom, beach, jacuzzi/indoor, sauna, shower, \\
 \end{tabular}
 \end{table}
 
-
-
-
-\section{Implementation}
+\section{Model Training}
 
 \subsection{Scene Classification}
 
@@ -211,6 +210,7 @@ During prediction, we set Non-Maximum Suppression (NMS) threshold as 0.4 and con
 
 
 
+\section{System Integration}
 
 \subsection{Deployment on Android}
 
@@ -219,16 +219,14 @@ Ideally, for a privacy control framework, we prefer a design that does not requi
 The deployment of Caffe models for scene classification and facial feature extraction is based on Caffe-android-library~\cite{links:caffeandroidlib}, we modified its code~\cite{links:caffeandroidlibzr} to support loading multiple Caffe models, batch feature extraction, and only forwarding to a specified layer during feature extraction, which saves useless computations from fully connected layers. There are other libraries for deploying neural networks on mobile, such as Torch-android~\cite{links:torchandroid} and MXNet~\cite{links:mxnetmobile}. The deployed scene classification model (based on AlexNet structure) has a size of 230MB, which is not small. However, its prediction is very fast, and can be easily fitted into the time slot of waiting response from cloud server. The facial feature extraction model (based on Lightened CNN structure) has a relatively bearable size of 33MB. Comparing to AlexNet, Lightened CNN model has smaller filter sizes, but with many more feature maps, therefore in run time, Lightened CNN model consumes about 1GB memory, which makes it not able to run on smartphones with less than 2GB memory~\ref{tbl-forwardingtime}. Possible ways to decrease model size and optimization of resource consumptions are also discussed in next chapter. Other lighter models we deployed on android include OpenCV face cascading model (less than 1MB), and shape predictor (90MB) in Dlib facial landmark detection.
 
 
-\subsection{System Integration}
-
-
-\begin{figure}[!htbp]
+\begin{figure}[b!]
     \centering
     \includegraphics[width=0.6\textwidth]{figure/ch4-cardeadataflow.pdf}
     \caption{Dataflow of Cardea}
     \label{fig:ch4-cardeadataflow}
 \end{figure}
 
+\subsection{Dataflow and Integration}
 Fig~\ref{fig:ch4-cardeadataflow} shows the detailed structure and dataflow of Cardea, which is mainly composed of the following steps (a demo video about the usage can be found in~\cite{links:cardeavid}):
 
 \begin{description}[leftmargin=0cm]
@@ -259,7 +257,7 @@ Fig~\ref{fig:ch4-cardeadataflow} shows the detailed structure and dataflow of Ca
   \item[{Concurrent requests:}] To enable concurrent requests from different client apps, we implement multiple "recognition" workers to process the queued messages from all the clients, recognition results from different workers will be collected and put into a result queue, followed by multiple "mailing" workers to make decision masks and mail the decision masks back to corresponding blocked client threads. We tested with a server configuration - "Intel i7-5820K CPU, 16GB RAM, GeForce 980Ti Graphic Card(6GB RAM)" and the campus's Wi-Fi network, the time from start sending message to receive server's response is $1-2s$, depending on the message type. The total time from capturing moment to the enforcement of protection actions is $2-4s$, depending on how many faces detected. Most time is spent on facial feature extraction and message data transmission. Note that processing in the server side is relatively fast, gesture recognition of one image takes $200-300ms$, while the time spent on SVM face classifier and face matching is negligible. With 6GB GPU RAM, the server can serve 3 gesture recognition workers at the same time, supporting 5-10 concurrent requests. The implementation of Cardea is hosted in~\cite{links:cardeaproj}.
 
 \end{description}
-\section{Evaluation}
+% \section{Evaluation}
 
 
 \newpage
