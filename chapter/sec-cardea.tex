@@ -140,7 +140,7 @@ To compare performance of features extracted from the two models, we run t-SNE v
 1 VGG CNN & N/A & N/A & $\sim 2780$ ms \\
 10 VGG CNN & N/A & N/A & $\sim 26740$ ms \\
 1 Lightened CNN & $\sim 508$ ms & $\sim 330$ ms & $\sim 303$ ms \\
-10 Lightened CNN & $\sim 6602$ ms & $\sim 3971$ ms & $\sim 2031$ ms \\
+10 Lightened CNN & $\sim 6602$ ms & $\sim 3071$ ms & $\sim 2031$ ms \\
  \bottomrule
 
 \end{tabular}
@@ -161,7 +161,7 @@ Lightened CNN model takes aligned face as input, requiring that the distance bet
 All the facial features uploaded by registered users are used to train a classifier in the cloud server, using LIBSVM library~\cite{chang2011libsvm}. During prediction, we enable probability estimations $p_i, i\in{1, \cdots, N}$, where $p_i$ is the probability of being user $i$. For each facial feature, if $\max_ip_i \leq T_p$, then we treat it as from an unknown person who hasn't registered in Cardea, otherwise it is from the user who has the highest probability and his privacy preference will be fetched for further processing. Threshold $T_p$ is an empirical parameter, a proper value of $T_p$ makes sure registered users are recognized correctly, and non-registered bystanders are recognized as unknown person. It is dependant on the face database scale, but the proper value can always be found through cross validation.
 
 \subsubsection{Matching}
-Face matching occurs when a recognized user $A$ has also specified and uploaded features of person $B$ with whom he doesn't want to be captured, it is to determine whether $B$ also appears in this captured image. Note that $B$ is not necessarily a registered user of Cardea. It is required that $n_B$, the number of $B$'s facial features uploaded by $A$ should be more than $10$. A simple way is pointing the camera on $B$'s photo but from different angles. Then for every detected face $C$ other than $A$ in the image, its feature $f_C$ will be compared with $n_B$ features of $B$ uploaded by $A$. $\mathtt{Cosine}$ similarity is used as distance metric. Among $n_B$ distances between $f_C$ and $B$'s features, we can calculate the ratio $r$ of distances which are shorter than a threshold $T_d$, if the ratio $r$ is higher than a threshold $T_r$, then $C$ and $B$ are the same person, thus $B$ appears with $A$ in the same image and $A$'s privacy will be protected. By tuning, we find $T_d \in (0.3, 0.5)$ and $T_r \in (0.5, 0.8) $ shows good enough performance. In Fig~\ref{fig:ch4-mfmsim}, we plot the distribution of distance between same person's Lightened CNN features and different person's Lightened CNN features. The features are extracted from all the faces in ORL face database~\cite{links:orlfacedb}, which consists of 400 images from 40 distinct subjects, 10 images per subject. Each subject has photos with different variations, such as: with/without glasses, open/closed eyes, and different facial expressions. It is obviously seen that distances between features of same person and features of different persons are well seprated, especially for the case of $\mathtt{cosine}$ similarity.
+Face matching occurs when a recognized user $A$ has also specified and uploaded features of person $B$ with whom he doesn't want to be captured, it is to determine whether $B$ also appears in this captured image. Note that $B$ is not necessarily a registered user of Cardea. It is required that $n_B$, the number of $B$'s facial features uploaded by $A$ should be more than $10$. A simple way is pointing the camera on $B$'s photo but from different angles. Then for every detected face $C$ other than $A$ in the image, its feature $f_C$ will be compared with $n_B$ features of $B$ uploaded by $A$. $\mathtt{Cosine}$ similarity is used as distance metric. Among $n_B$ distances between $f_C$ and $B$'s features, we can calculate the ratio $r$ of distances which are shorter than a threshold $T_d$, if the ratio $r$ is higher than a threshold $T_r$, then $C$ and $B$ are the same person, thus $B$ appears with $A$ in the same image and $A$'s privacy will be protected. By tuning, we find $T_d \in (0.4, 0.6)$ and $T_r \in (0.4, 0.8) $ shows good enough performance. In Fig~\ref{fig:ch4-mfmsim}, we plot the distribution of distance between same person's Lightened CNN features and different person's Lightened CNN features. The features are extracted from all the faces in ORL face database~\cite{links:orlfacedb}, which consists of 400 images from 40 distinct subjects, 10 images per subject. Each subject has photos with different variations, such as: with/without glasses, open/closed eyes, and different facial expressions. It is obviously seen that distances between features of same person and features of different persons are well seprated, especially for the case of $\mathtt{cosine}$ similarity.
 
 \begin{figure}[!htbp]
     \centering
@@ -276,6 +276,220 @@ Fig~\ref{fig:ch4-cardeadataflow} shows the detailed structure and dataflow of Ca
 
 \section{Evaluation}
 
+In this section, we present evaluation results along $3$ axes:
+
+\begin{inparaenum}[\itshape 1\itshape)]
+\noindent\item \textit{\textbf{vision micro--benchmarks}}, to evaluate the performance of different computer vision tasks, including scene classification, face recognition and matching, and hand gesture recognition. Note that when doing this evaluation, based on the categories shown in Table~\ref{tbl-scenecate}, we modify the scene categories and groups (add more categories and remove few categories and regroup them) hoping that it would cover more daily scenes (e.g. ``Exhibition'' group is removed). After this modification, we have $9$ groups composed of $98$ categories ($1.9$ million images) shown in Table~\ref{tbl-scenecateupdate}. We also retrain the scene classification model, and get 55\% category validation accuracy and 83\% group validation accuracy. {\textbf{All evaluations in this section are based on this new scene classification model.}} \\
+\item \textit{\textbf{system overall performance}}, according to final privacy protection decisions and users' privacy preferences.\\
+\item \textit{\textbf{runtime and energy consumption}}, which shows the processing time of each part, and energy consumed on one image.\\
+\end{inparaenum}
+
+
+\begin{table}[tb]
+\centering
+\caption{Nine general scene groups}
+\label{tbl-scenecateupdate}
+\begin{tabular}{llll}
+\toprule
+\textbf{Group name}  & \textbf{Abbreviatin}    & \textbf{Scenes \#}     & \textbf{Examples}   \\ \midrule
+Shopping        &Sh & $20$            & clothing store, market, supermarket\\ \midrule
+Travelling      &Tr & $9$             & airport, bus station, subway platform\\ \midrule
+Park \& street  &Pa & $12$            & downtown, park, street, alley\\ \midrule
+Eating \&       &Ea & $18$            & bar, bistro, cafeteria, coffee shop,\\
+drinking        & &                 & fastfood restaurant, food court\\ \midrule
+Working \&      &Wo & $9$             & classroom, conference center, library,\\
+study           & &                 & office, reading room\\ \midrule
+Scantily clad   &Sc & $12$            & beach, swimming pool, water park\\ \midrule
+Medical care    &Me & $2$             & hospital room, nursing home\\ \midrule
+Religion        &Re & $11$            & cathedral, chapel, church, temple\\ \midrule
+Entertainment   &En & $5$             & amusement park, ballroom, discotheque\\ \midrule
+\textit{All}    & & $\mathit{98}$   &   \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Scene Classification}
+
+
+We recruited $8$ volunteers and asked them to take pictures ``in the wild'' belonging to $9$ general scene groups. After manually annotating these pictures, we had $759$ images in total, with $638$ images in $9$ scene groups we are interested in. We then predict scene group for each image using the scene classification model we trained.
+
+\begin{figure}[!htbp]
+  \makebox[\textwidth]{
+    \centering
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-scenerecall.pdf}
+        \caption{Recall}
+        \label{fig:ch4-scenerecall}
+      \end{subfigure}
+    }
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-sceneconfusion.pdf}
+        \caption{Confusion matrix}
+        \label{fig:ch4-sceneconfusion}
+      \end{subfigure}
+    }
+  }
+
+\caption{Scene classification evaluation results.}
+\label{fig:ch4-sceneeval}
+\end{figure}
+
+The number of images and classification result of each group are shown in Figure~\ref{fig:ch4-scenerecall}. The true positives (TP) refers to images that are correctly classified, and false negatives (FN) are those classified as other scene groups. Overall, we can achieve {$0.83$} recall (TP/(TP+FN)), and $5$ scene groups are with recall more than $0.90$. It is worth mention that the recall of scene groups \textit{Scantily clad (Sc)}, \textit{Medical care (Me)}, and \textit{Religion (Re)} exceed $0.95$, which provides strong support to protect users' privacy in sensitive scenes.
+
+We also give the detailed classification confusion matrix in Figure~\ref{fig:ch4-sceneconfusion}. It shows that most FN of \textit{Eating \& drinking (Ea)} are classified as \textit{Shopping (Sh)} or \textit{Working \& study (Wo)}, and most FN of \textit{Wo} are classified as \textit{Ea} or \textit{Sh}. The reason is that boundaries between \textit{Sh}, \textit{Ea}, or \textit{Wo} are not clear. For example, shopping malls have food courts, or people study in coffee shop. The same reason accounts for the confusion between \textit{Park \& street (Pa)} and \textit{Travelling (Tr)}. Moreover, for scene categories such as pub and bar, people may group them into \textit{Ea} or \textit{En}. Therefore, a safe way is to select more scene groups, for instance, both \textit{Ea} and \textit{En} when you go to a pub at night.
+
+In general, the evaluation results from images captured ``in the wild'' demonstrate that most of scenes can be correctly classified, the performance is especially satisfactory for those sensitive scenes.
+
+
+\subsection{Face Recognition and Matching}
+We first select $50$ subjects from LFW dataset \cite{links:lfw} who has more than $10$ images as registered users. Note that subjects in the CASIA WebFace Database used to train the lightened CNN model do not overlap with those in LFW. For each subject, we extract at least $100$ face features form Youtube video to simulate the process of user registration. In total, we get $5042$ feature vectors. These features are then divided into the training set and validation set. In addition, we collect user test set and non--user test set to evaluate the face recognition accuracy. The user test set is composed of $511$ face feature vectors from online images of all $50$ registered users. The non--user test set consists of $166$ face feature vectors from $100$ subjects in LFW database whose names start with ``\textit{A}'' as non--registered bystanders.
+
+\begin{figure}[!htbp]
+  \makebox[\textwidth]{
+    \centering
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-accuracy-num.pdf}
+        \caption{Training accuracy}
+        \label{fig:ch4-accnum}
+      \end{subfigure}
+    }
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-accuracy-threshold.pdf}
+        \caption{Testing accuracy with threshold $T_p$}
+        \label{fig:ch4-accthreshold}
+      \end{subfigure}
+    }
+  }
+\caption{Face recognition accuracy.}
+\label{fig:ch4-facereceval}
+\end{figure}
+
+Figure~\ref{fig:ch4-accnum} shows the recognition accuracy as to validation set and user test set with different numbers of features per person used for training. The accuracy refers to the fraction of faces that are correctly recognized. The results show the model trained with $10 \sim 20$ features per person can achieve near $100\%$ accuracy on the validation set and over $90\%$ accuracy on the user test set. Little improvement can be achieved with more training data. Figure~\ref{fig:ch4-accthreshold} shows the overall accuracy with probability threshold $T_p$. For non--user test set, the accuracy means the fraction of faces that are not recognized as registered users. As a result, the accuracy will increase for the non--user test set but decrease for the validation set and user test set when $T_p$ goes up. To make sure that registered users can be correctly recognized, and non-registered users will not be mistakenly recognized, we choose $T_p$ to be $0.08 \sim 0.09$, which achieves over $80\%$ recognition accuracy for both users and non--users. It is worth mentioning that the proper value of $T_p$ should be decided case by case through such experiment for different databases with different scales.
+
+\begin{figure}[!htbp]
+  \makebox[\textwidth]{
+    \centering
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-accuracy-cosine.pdf}
+        \caption{Cosine distance}
+        \label{fig:ch4-acccosine}
+      \end{subfigure}
+    }
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-accuracy-l2.pdf}
+        \caption{Euclidean distance}
+        \label{fig:ch4-accl2}
+      \end{subfigure}
+    }
+  }
+\caption{Face matching accuracy with different distance threshold $T_d$ and ratio threshold $T_r$.}
+\label{fig:ch4-facematcheval}
+\end{figure}
+
+To evaluate face matching performance, we still use the user test set. Subjects who have more than $10$ features are regarded as the database group, the rest are the query group. Similar to face recognition accuracy, we break face matching accuracy into two parts: for persons belonging to the database group, we need to correctly match features only to the correct person; for persons not belonging to the database group, we should not match features to anyone. Figure~\ref{fig:ch4-facematcheval} shows the matching accuracy with Cosine distance and Euclidean distance respectively. The results show that Cosine distance can achieve better performance with near $100\%$ accuracy for both situations in which people belong to the database group or the query group. The preferable parameters would be distance threshold $T_d \approx 0.5$, and ratio threshold $T_r \approx 0.5$.
+
+Overall, the face recognition and matching methods we employ with appropriate thresholds $T_p, T_d,$ and $T_r$ can effectively and efficiently recognize users and match faces in the images. Besides, only a small number of features are needed for training the face recognition model and for face matching algorithm.
+
+\subsection{Gesture Recognition}
+
+\begin{figure}[!htbp]
+  \makebox[\textwidth]{
+    \centering
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-hand-recall.pdf}
+        \caption{Recall for different scenes}
+        \label{fig:ch4-gestrecallscn}
+      \end{subfigure}
+    }
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-hand-precision.pdf}
+        \caption{Precision for different scenes}
+        \label{fig:ch4-gestprecisionscn}
+      \end{subfigure}
+    }
+    \raisebox{-0.5\height}{
+      \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{figure/ch4-hand-recall-size.pdf}
+        \caption{Recall for different hand region sizes}
+        \label{fig:ch4-gestrecallsize}
+      \end{subfigure}
+    }
+  }
+\caption{Hand gesture recognition results.}
+\label{fig:ch4-gesteval}
+\end{figure}
+
+We asked our volunteers to take pictures for each other with different distances, angles, lighting conditions, and backgrounds. We manually annotated all images with hand regions and the scene group it belongs to. In total, we got $338$ hand gesture images with $208$ ``Yes'' gestures, $211$ ``No'' gestures, and $363$ natural hands. The images covers $6$ out of $9$ scene groups. For images do not belong to our summarized scene groups, we categorize them into group \textit{Others}.
+
+Figure~\ref{fig:ch4-gestrecallscn} and Figure~\ref{fig:ch4-gestprecisionscn} show the recall and precision for ``Yes'' and ``No'' gestures under different scene groups. The recall and precision of ``Yes'' gesture, the precision of ``No'' gesture reach $1.0$ for most of the scene groups, while the recall of ``No'' gesture achieves $0.70$ on average. For \textit{Entertainment (En)}, the recall is low, resulting from dim illumination in most of the images we tested. In general, the performance of gesture recognition does not show any marked correlation with different scene groups. Therefore, we further investigated the recall in terms of gesture size, as low recall will greatly threatens user's privacy compared with precision.
+
+Figure~\ref{fig:ch4-gestrecallsize} plots the recall of gestures with varying hand region sizes. Each image will be resized to about $800 \times 600$ square pixels, while keeping its aspect ratio. We classify them into $10$ size intervals as plotted along the \textit{x}--axis. The result shows ``Yes'' gestures can achieve more than $0.9$ recall for all sizes of hand region. On the other hand, recall of ``No'' gestures tends to rise with increasing hand region size in general. It indicates that the performance of ``No'' gesture recognition can be improved with more training data with smaller sizes.
+
+In summary, the performance of gesture recognition demonstrates the feasibility of integrating gesture interaction in Cardea for flexible privacy preference modification. It performs extremely well for ``Yes'' gesture recognition, and there is room for improvement of ``No'' gesture recognition with more training samples.
+
+
+\subsection{Overall Performance}
+
+\begin{table}[tb]
+\centering
+\caption{Cardea's overall privacy protection performance.}
+\label{tbl-overallperform}
+\begin{tabular}{lr|lr}
+\toprule
+\textbf{Overall accuracy}   & $\mathbf{86.4\%}$ & Protection accuracy   & $80.4\%$  \\
+                            &                   &  No protection accuracy& $91.0\%$ \\ \midrule
+Face recognition accuracy   & $98.5\%$  & ``Yes'' gesture recall        & $97.9\%$  \\
+scene classification recall & $77.7\%$  & ``No'' gesture recall     & $77.3\%$  \\ \bottomrule
+
+\end{tabular}
+\end{table}
+
+After evaluating each vision task separately, we now present Cardea's overall privacy protection performance. Faces in the image taken using Cardea end up being protected (e.g., blurred) or remain unchanged, correctly or incorrectly, depending on protection decisions made based on both user's privacy profile and results from vision tasks. Therefore, we asked $5$ volunteers to register as Cardea users and set their privacy profiles. Now the face recognition model is trained using $1100$ face feature vectors from $55$ people, including $50$ people from LFW dataset. We take about $300$ images and get processed images. As we focus more on face recognition rather than face detection, we only keep images that faces have been successfully detected. In total we got $224$ images for evaluation.
+
+Table~\ref{tbl-overallperform} shows the final privacy protection accuracy, as well as performance of each vision task. The protection accuracy shows $80.4\%$ faces that require protection are actually protected, and $91.0\%$ faces that do not ask for protection remain unchanged. Overall, $86.4\%$ faces are processed correctly, though the scene classification recall and ``No'' gesture recall do not reach $80\%$. The reason is that protection decision making process of Cardea sometimes can make up for mistakes happening in the early step. For example, if user's ``No'' gesture is not detected, his face can still be protected when the predict scene is selected in user's profile.
+
+In summary, Cardea achieves over $85\%$ accuracy for users in the real world. Improvements of each vision part will directly benefit Cardea's overall performance in the future.
+
+
+\subsection{Runtime and Energy Consumption}
+We validate the client side implementations on Samsung Galaxy Note 4\footnote{\url{http://www.gsmarena.com/samsung_galaxy_note_4-6434.php}}, with 4$\times$2.7 GHz Krait 450 CPU, Qualcomm Snapdragon 805 Chipset, 3GB RAM, and 16 MP, f/2.2 Camera. The server side is configured with Intel i7--5820K CPU, 16GB RAM, GeForce 980Ti Graphic Card (6GB RAM). The client and server communicate via a TCP over Wi--Fi connection.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=0.8\textwidth]{figure/ch4-runtime.pdf}
+\caption{Task level runtime of Cardea.}
+\label{fig:ch4-runtime}
+\end{figure}
+
+Figure~\ref{fig:ch4-runtime} plots the time taken for Cardea to complete different vision tasks. We take images with $1$ face, $2$ faces, and $5$ faces, in the size of $1920 \times 1080$. The images will be compressed in JPEG format. On average, the data sent is about $950$ KB. Note that some vision tasks will not be triggered in some situations according to the decision workflow shown in Fig~\ref{fig:ch4-decisiontree}. For example, if no user is recognized in the image, all other tasks will not start. For the purpose of measurement, we still activate all tasks to illustrate the runtime difference of images captured with varying number of faces.
+
+Among all vision tasks, face processing (i.e., face detection and feature extraction) and scene classification are performed on the smartphone. The face processing takes about $900$ milliseconds for 1 face, and increases about $200$ milliseconds per additional face. Therefore, it reaches about $1100$ and $1700$ milliseconds for $2$ faces and $5$ faces respectively. This is the most fundamental step that runs on the smartphone locally due to privacy considerations. Owing to the real--time OpenCV face detection implementation and lightened CNN feature extraction model, it takes less then $1/3$ overall runtime. The scene classification takes around $900$ milliseconds per image, as it only performs once, independent of number of people in the image. The face recognition and matching tasks on the server side take less than $30$ milliseconds for five people. Though the time grows with increasing number of people, compared with other tasks they barely affect the overall runtime. The gesture recognition also runs on the server, and it takes about $330$ milliseconds. Similar to scene recognition, it performs on the whole image once regardless the number of faces. According to the measurement, we find the network transmission accounts for a majority of the overall runtime due to the unstable network environment.
+
+In general, photographers using Cardea to take pictures can get one processed image within $5$ seconds in the most heavy case (i.e., there is registered user who enables gestures, and scene classification will be triggered on the smartphone). Compared with existing image capture platforms that also provide privacy protection such as I-pic \cite{aditya2016pic}, Cardea offers more efficient image processing functionality.
+
+\begin{table}[tb]
+\centering
+\caption{Energy consumption of Cardea with different number of faces.}
+\label{tbl-energy}
+\begin{tabular}{lrrr}
+\toprule
+            & Face recognition      & Whole process (uAh)   & \# of images \\ \midrule
+1 face      & $217.2$ (std $3.4$)   & $1134.5$ (std $45.9$) & $\sim 2800$       \\
+2 faces     & $344.1$ (std $13.1$)  & $1276.7$ (std $113.8$)    & $\sim 2500$       \\
+5 faces     & $692.6$ (std $36.5$)  & $1641.1$ (std $66.0$) & $\sim 2000$       \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Next, we measure the energy consumption of taking pictures with Cardea on Galaxy Note 4 phone using the Monsoon Power Monitor \cite{links:powermonitor}. The images are also taken in size of $1920 \times 1080$ square pixels. The first two columns of Table~\ref{tbl-energy} show the energy consumption for the face processing part only, and for the whole process (i.e., from taking a picture to getting the processed image) with 1 face, 2 faces, and 5 faces respectively. The screen stays on during the whole process, therefore a large portion of the energy consumption is due to the always--on screen. Moreover, we can observe that face processing energy is linear to face numbers. All the other parts including scene classification, sending and receiving data are independent of the number of faces in the image, which is consistent with runtime measurements.
+
+Using energy measurements, we also show Cardea's capacity on Galaxy Note 4 in the last column of Table~\ref{tbl-energy}. This device has a $3220$ mAh battery, therefore can capture about $2000$ high quality images with $5$ faces using Cardea.
 
 
 
