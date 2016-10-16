@@ -1,19 +1,18 @@
 \chapter{Conclusion and Future Work}\label{sec-conclusion}
 
-In this thesis we present Cardea, a visual privacy control service framework that aims to address individual's visual privacy issues caused by pervasive cameras. Users can express their privacy preferences in terms of location, scenes, and presence of others. Furthermore, "Yes" and "No" gestures can be used to temporarily modify users' privacy settings. The combination of context-dependent privacy profiles and interactive instructions provides a flexible and convenient way for individuals to control their visual privacy.
+In this thesis we present Cardea, a visual privacy control service framework that aims to address individual's visual privacy issues caused by pervasive cameras. Users can express their privacy preferences in terms of location, scenes, and presence of others. Furthermore, ``Yes'' and ``No'' gestures can be used to temporarily modify users' privacy settings. The combination of context-dependent privacy profiles and interactive instructions provides a flexible and convenient way for individuals to control their visual privacy. We demonstrate performances of different vision tasks with pictures ``in the wild'', and overall it can achieve about 86\% accuracy on users' requests. The evaluation of runtime and energy consumption with Cardea prototype proves the feasibility of using Cardea for taking pictures while respecting bystanders' privacy preferences.
 
 
-
-Privacy itself is an abstract concept and can not be hard coded if we are aiming at a smart and general control framework. We believe deep learning methods will be applied more and more on privacy control area, towards the direction of learning visual privacy concerns automatically with bigger and higher quality dataset available in future. Based on Cardea's current design, implementation and evaluation, we propose the following future works for improvement:
+Privacy itself is an abstract concept hence can not be hard coded if we are aiming at a smart and general control framework. We believe deep learning methods will be applied more and more on privacy control area, towards the direction of learning visual privacy concerns automatically using bigger and higher quality dataset available in the future. Based on Cardea's current design, implementation and evaluation, we propose the following future works for improvement:
 
 \begin{itemize}
 
 \item Recently there are many research works about neural network model compression~\cite{han2015deep}, which points us a straight way to decrease the resources consumption, especially for Android client apps. Managing to deploy neural networks on mobile's GPU will save resources both in terms of RAM usage and computation, this requires Cuda or OpenCL implementation of related layers. Also during the forwarding time, activations of all layers are unnecessarily kept in memory for backpropagation which is not needed in deployment time, an implementation of forwarding phase that only keep previous layer's activation will largely reduce memory consumption, which is very important to mobile devices.
 \item The requirement of connection to the server makes Cardea easily hackable. An ad hoc approach that mobile devices broadcast owners' facial features as well as privacy preferences to nearby devices is possible if the RPN layer is implemented in C++, making gesture recognition runs locally. Another advantage of ad hoc solution is there will be no large scale face recognition problem, instead it becomes a small scale face matching/verification problem. We also consider using siamese network for better performance of face matching.
-\item Preparing larger and more comprehensive dataset for each task is definitely needed. Both scene classification model and gesture recognition model can benefit a lot if we are able to collect more daily life images with better labels or annotations. How to get supervised signals about visual privacy concerns from the design of user interactions worth investigation, integration of these interactions in life logging devices will provide high quality training dataset.
+\item Preparing larger and more comprehensive dataset for each task is definitely needed. Both scene classification model and gesture recognition model can benefit a lot if we are able to collect more daily life images with better labels or annotations. How to get supervised signals about visual privacy concerns from the design of user interactions is an interesting topic, integration of these interactions in life logging devices will provide high quality training dataset.
+\item As in~\cite{raval2016you}, it is preferable to integrate Cardea within camera subsystems of different mobile platforms.
 
 \end{itemize}
-
 
 
 \newpage
