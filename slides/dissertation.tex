@@ -1,0 +1,113 @@
+\documentclass{beamer}
+
+\mode<presentation> {
+\usetheme{CambridgeUS}
+\usecolortheme{lily}
+}
+
+\usepackage{graphicx}
+\graphicspath{{../}, {./}}
+\usepackage{color}
+
+\usepackage[T1]{fontenc}
+\usepackage[sc,osf]{mathpazo}
+
+% Linux Libertine FontType for main text
+\usepackage{fontspec,xltxtra,xunicode}
+\setromanfont[Mapping=tex-text]{Linux Libertine} % Main document font
+
+% use ding font
+\usepackage{pifont}
+
+% subfigure and adjustbox
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{adjustbox}
+
+
+\usepackage{array}
+% New column type with fixed width,
+% centering both horizontally and vertically
+\newcolumntype{M}[1]{>{\centering\arraybackslash\hspace{0pt}}m{#1}}
+
+% tikz
+\usepackage{tikz}
+\usetikzlibrary{arrows, positioning, shapes, decorations.pathmorphing}
+\input{/Users/zerry/Work/Notes/Tex/tikzArrows/arrowsnew}
+
+% For declaring customized math functions and their text fonts
+\usepackage{amsmath}
+\DeclareMathOperator{\sigmoid}{sigmoid}
+
+\PassOptionsToPackage{hyphens}{url}
+\usepackage{hyperref}
+
+% command to easy insert figure for beamer
+\newcommand {\easyfigure}[2][0.8] {
+    \begin{figure}[!htbp]
+        \centering
+        \includegraphics[width=\textwidth,height=#1\textheight,keepaspectratio]{#2}
+    \end{figure}
+}
+
+% delete line
+\usepackage{ulem}
+
+% vertical center gesture icons in line
+\newcommand{\vcenteredinclude}[1]{\begingroup
+  \setbox0=\hbox{\includegraphics[height=\baselineskip, keepaspectratio]{#1}}%
+\parbox{\wd0}{\box0}\endgroup}
+
+% top/mid/bottom-rule of table
+\usepackage{booktabs}
+
+% algorithm
+\usepackage{algorithm, algorithmic}
+
+\title[Cardea]{Cardea: A Context--aware and Interactive Visual Privacy Control Framework}
+\author{Rui Zheng}
+\institute[HKUST] % short name shown in footnote or sidebar
+{
+The Hong Kong University of Science and Technology \\ % full name
+\medskip
+rzhengac@connect.ust.hk % optional email add
+}
+\date{{\scriptsize October 21, 2016}}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Agenda}
+\tableofcontents
+\end{frame}
+
+\input{section/intro_related}
+\input{section/cnn}
+\input{section/design_implement}
+\input{section/eval}
+\input{section/conclusion}
+
+% \begin{frame}[t]
+% \frametitle{Slide template}
+% \begin{columns}[T]
+% \begin{column}{0.5\textwidth}
+  % \begin{block}{\bf Block up}
+
+  % \end{block}
+
+  % \begin{block}{\bf Block down}
+
+  % \end{block}
+% \end{column}\hfill
+
+% \begin{column}{0.5\textwidth}
+% \end{column}
+% \end{columns}
+% \end{frame}
+
+
+\end{document}

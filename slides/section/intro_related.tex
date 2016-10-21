@@ -1,0 +1,186 @@
+\section{Introduction and Related Works}
+\frame{\frametitle{Agenda} \tableofcontents[currentsection]}
+
+\subsection{Visual Privacy}
+\begin{frame}[t]
+\frametitle{Rise of visual privacy concern}
+
+\begin{block}{\bf Pervasive cameras}
+\easyfigure{slifigure/ch1-devices.png}
+\end{block}
+
+\begin{block}{\bf Protection prototypes}
+  \tiny
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+  \begin{itemize}
+      \item Respectful Cameras, 2007, cctv, colored markers
+      \item PriSurv, 2008, cctv, RFID tags
+      \item Scanner Darkly, 2013, kinect
+      \item Courteous Glass, 2014, wearable, FIR imagers
+      \item Privacy Tag, 2014, mobile, QR code
+  \end{itemize}
+    \end{column}\hfill
+    \begin{column}{0.5\textwidth}
+  \begin{itemize}
+    \item Screenavoider \& Placeavoider, 2014, lifelogging, neural networks
+    \item I-Pic, 2016, mobile, neural networks
+  \end{itemize}
+    \end{column}
+  \end{columns}
+\end{block}
+
+
+% \only<2->{
+% \setbeamercovered{transparent}
+% \setbeamercolor{alerted text}{fg=blue}
+% \begin{block}{\bf Protection prototypes}
+  % \tiny
+  % \begin{columns}[T]
+    % \begin{column}{0.5\textwidth}
+  % \begin{itemize}
+      % \item<2-|alert@2> Respectful Cameras, 2007, cctv, colored markers
+      % \item<3-|alert@3> PriSurv, 2008, cctv, RFID tags
+      % \item<4-|alert@4> Scanner Darkly, 2013, kinect
+      % \item<5-|alert@5> Courteous Glass, 2014, wearable, FIR imagers
+      % \item<6-|alert@6> Privacy Tag, 2014, mobile, QR code
+  % \end{itemize}
+    % \end{column}\hfill
+    % \begin{column}{0.5\textwidth}
+  % \begin{itemize}
+    % \item<7-|alert@7> Screenavoider \& Placeavoider, 2014, lifelogging, neural networks
+      % \item<8-|alert@8> I-Pic, 2016, mobile, neural networks
+  % \end{itemize}
+    % \end{column}
+  % \end{columns}
+% \end{block}
+% }
+
+
+\end{frame}
+
+\subsection{Related Works}
+\begin{frame}[t]
+\setbeamercovered{transparent}
+\setbeamercolor{alerted text}{fg=blue}
+\frametitle{Research motivation}
+
+\begin{block}{\bf User studies}
+  \begin{itemize}
+      \item<1-|alert@+> consent mechanism is welcomed when being recorded
+      \item<2-|alert@+> lifeloggers care about the privacy of bystanders
+      \item<3-|alert@+> privacy concerns depend on context: {\it who, what, when, where, why and how}
+  \end{itemize}
+\end{block}
+
+  \only<-3>{
+  \begin{itemize}
+    \item<1-|alert@1,3> {\tiny Tamara Denning et al. \it``In situ with bystanders of augmented reality glasses: Perspectives on recording and privacy-mediating technologies.''}
+    \item<1-|alert@1,2> {\tiny Roberto Hoyle et al. \it``Privacy behaviors of lifeloggers using wearable cameras.''}
+    \item<1-|alert@1> {\tiny Roberto Hoyle et al. \it``Sensitive lifelogs: A privacy analysis of photos from wearable cameras.''}
+    \item<1-|alert@1> {\tiny Paarijaat Aditya et al. \it``I-pic: A platform for privacy-compliant image capture.''}
+  \end{itemize}
+}
+
+% \only<4->{
+% \begin{block}{\bf Limitation of previous solutions}
+  % \begin{itemize}
+      % \item<4-|alert@+> specific application settings
+      % \item<5-|alert@+> static policies
+      % \item<6-|alert@+> aesthetically awkward
+      % \item<7-|alert@+> extra sensors
+  % \end{itemize}
+% \end{block}
+% }
+
+\only<4->{
+\begin{block}{\bf Limitation of previous solutions}
+  \begin{itemize}
+      % \item specific application settings
+      \item static policies
+      \item aesthetically awkward
+      \item extra sensors
+  \end{itemize}
+\end{block}
+}
+\end{frame}
+
+\begin{frame}[t]
+\setbeamercovered{transparent}
+\setbeamercolor{alerted text}{fg=blue}
+\frametitle{Privacy design}
+
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \begin{block}{\bf Axes for design}
+      \begin{itemize}
+          \item problem settings
+          \item technical solution
+          \item enforcement time/level
+          \item protection object
+          \item opt-in vs opt-out
+      \end{itemize}
+    \end{block}
+  \end{column}\hfill
+  \begin{column}{0.5\textwidth}
+    \begin{block}{\bf Cardea}
+      \begin{itemize}
+          \item mobile/wearable cameras
+          \item computer vision
+          \item {\it in situ}/application level
+          \item bystander privacy
+          \item opt-out
+      \end{itemize}
+    \end{block}
+  \end{column}
+\end{columns}
+
+\begin{block} {\bf Objectives}
+    \begin{itemize}
+        \item Context dependent
+        \item Individualized
+        \item Dynamic
+    \end{itemize}
+\end{block}
+
+
+
+% \begin{columns}
+  % \begin{column}{0.5\textwidth}
+    % \begin{block}{\bf Axes for design}
+      % \begin{itemize}
+          % \item<1-|alert@+> problem settings
+          % \item<2-|alert@+> technical solution
+          % \item<3-|alert@+> enforcement time/level
+          % \item<4-|alert@+> protection object
+          % \item<5-|alert@+> opt-in vs opt-out
+      % \end{itemize}
+    % \end{block}
+  % \end{column}\hfill
+  % \begin{column}{0.5\textwidth}
+  % \only<6->{
+    % \begin{block}{\bf Cardea}
+      % \begin{itemize}
+          % \item<6-|alert@+> mobile/wearable cameras
+          % \item<7-|alert@+> computer vision
+          % \item<8-|alert@+> {\it in situ}/application level
+          % \item<9-|alert@+> bystander privacy
+          % \item<10-|alert@+> opt-out
+      % \end{itemize}
+    % \end{block}
+  % }
+  % \end{column}
+% \end{columns}
+
+  % \only<11->{
+% \begin{block} {\bf Objective}
+    % \begin{itemize}
+        % \item<11-|alert@1> Context dependent
+        % \item<12-|alert@3> Individualized
+        % \item<13-|alert@5> Dynamic
+    % \end{itemize}
+% \end{block}
+  % }
+\end{frame}
+
+

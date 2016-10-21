@@ -1,0 +1,297 @@
+\section{Convolutional Neural Networks}
+\frame{\frametitle{Agenda} \tableofcontents[currentsection]}
+
+\subsection{Artificial Neural Networks}
+
+\begin{frame}[t]
+\frametitle{Deep learning}
+\vspace{-1cm}
+\begin{columns}[T]
+\begin{column}{0.4\textwidth}
+\vspace{1cm}
+\begin{block}{\bf Hard coded AI}
+Requires immense amount of knowledge about the world.
+\end{block}
+\easyfigure{slifigure/ch3-expertsys.jpg}
+{\tiny\em Source: http://www.ictlounge.com/html/expert\_systems.htm}
+\end{column}\hfill
+
+\begin{column}{0.6\textwidth}
+\easyfigure[0.8]{slifigure/ch3-dlrelation-1.pdf}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Deep learning}
+\vspace{-1cm}
+\begin{columns}[T]
+\begin{column}{0.4\textwidth}
+\vspace{1cm}
+\begin{block}{\bf Conventional machine learning}
+Requires domain experts spending years to design effective features.
+\end{block}
+\easyfigure{slifigure/ch3-sift.jpg}
+{\tiny\em Source: http://lear.inrialpes.fr/people/vandeweijer/color\_descriptors.html}
+\end{column}\hfill
+
+\begin{column}{0.6\textwidth}
+\easyfigure[0.8]{slifigure/ch3-dlrelation-2.pdf}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Deep learning}
+\vspace{-1cm}
+\begin{columns}[T]
+\begin{column}{0.4\textwidth}
+\vspace{1cm}
+\begin{block}{\bf Shallow representation learning}
+Learned features are not powerful enough.
+\end{block}
+
+\easyfigure{slifigure/ch3-shallowae.png}
+{\tiny\em Source: http://multithreaded.stitchfix.com/blog/2015/09/17/deep-style/}
+% \easyfigure{slifigure/ch3-weights.png}
+% {\tiny\em Source: http://cs231n.github.io/convolutional-networks/}
+\end{column}\hfill
+
+\begin{column}{0.6\textwidth}
+\easyfigure[0.8]{slifigure/ch3-dlrelation-3.pdf}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Deep learning}
+\vspace{-1cm}
+\begin{columns}[T]
+\begin{column}{0.4\textwidth}
+\vspace{1cm}
+\begin{block}{\bf Deep learning}
+Build complex concepts out of simpler concepts. Can learn effective mid-level to high-level features.
+\end{block}
+
+\easyfigure{slifigure/ch3-convnet.jpg}
+{\tiny\em Source: http://cs231n.github.io/convolutional-networks/}
+\end{column}\hfill
+
+\begin{column}{0.6\textwidth}
+\easyfigure[0.8]{slifigure/ch3-dlrelation-4.pdf}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+\setbeamercovered{transparent}
+\frametitle{Artificial Neural Networks}
+\begin{columns}[T]
+\begin{column}{0.4\textwidth}
+\begin{block}{\bf Network structure}
+  \begin{itemize}
+    \setbeamercolor{alerted text}{fg=blue}
+    \item<1-|alert@+> single neuron
+    \item<2-|alert@+> activation
+    \item<3-|alert@+> loss function
+  \end{itemize}
+\end{block}
+
+\only<1>{\easyfigure[1]{figure/ch3-bioneuron.png}{\tiny\em Source: http://cs231n.github.io/neural-networks-1/}}
+\only<2>{\easyfigure[1]{figure/ch3-activations.pdf}}
+\only<3>{
+  \scriptsize
+  \vspace{0.25cm}
+  {\color{blue} classification}\\
+      \hspace{0.2cm}\ding{229} cross-entropy:\\
+      \hspace{1cm} $L_i = -\log(\frac{e^{f_{y_i}}}{\sum_je^{f_j}})$\\
+      \hspace{0.2cm}\ding{229} hinge loss:\\
+      \hspace{1cm} $L_i = \sum_ {j\neq y_i} \max(0, f_j-f_{y_i}+1)$\\
+      \hspace{0.2cm}\ding{229} attribute classfication\\
+
+  \vspace{0.5cm}
+
+  {\color{blue} regression}\\
+      \hspace{0.2cm}\ding{229} $L_2$ loss:\\
+      \hspace{1cm} $L_i = ||f - y_i||_2^2$
+
+}
+
+\end{column}\hfill
+
+\begin{column}{0.6\textwidth}
+\easyfigure[1]{slifigure/ch3-annmnist.png}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+\setbeamercovered{transparent}
+\frametitle{Artificial Neural Networks}
+\begin{columns}[T]
+\begin{column}{0.4\textwidth}
+\begin{block}{\bf Network structure}
+  \begin{itemize}
+    \item single neuron
+    \item activation
+    \item loss function
+  \end{itemize}
+\end{block}
+
+\begin{block}{\bf Training}
+  \begin{itemize}
+    \setbeamercolor{alerted text}{fg=blue}
+    \item<1-|alert@+> back propagation
+    \item<2-|alert@+> data preprocessing
+    \item<3-|alert@+> batch normalization
+  \end{itemize}
+\end{block}
+
+
+\end{column}\hfill
+
+\begin{column}{0.6\textwidth}
+  \only<1>{\easyfigure{slifigure/ch3-bpgraph.png}{\tiny\em Source: http://colah.github.io/posts/2015-08-Backprop/}}
+  \only<2>{\easyfigure{slifigure/ch3-datapreproc-1.png}\vspace{-0.5cm}\easyfigure{slifigure/ch3-datapreproc-2.png}{\tiny\em Source: http://cs231n.github.io/neural-networks-2/}}
+  \only<3>{\easyfigure{slifigure/ch3-batchnorm.png}{\tiny Sergey Ioffe and Christian Szegedy: \em https://arxiv.org/abs/1502.03167}}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
+
+\subsection{Convolutional Neural Networks}
+\begin{frame}[t]
+\setbeamercovered{transparent}
+\frametitle{What is new about CNN}
+
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\begin{block}{\bf New layers}
+\begin{itemize}
+  \setbeamercolor{alerted text}{fg=blue}
+  \item<1-|alert@+> Weight sharing through convolution
+  \item<2-|alert@+> Translation invariance through pooling
+  \item<3-|alert@+> Regularization through dropout
+\end{itemize}
+\end{block}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+  \only<1>{\easyfigure{slifigure/ch3-convlayer.png}{\tiny\em Source: http://deeplearning.net/tutorial/lenet.html}}
+  \only<2>{\easyfigure{slifigure/ch3-poollayer.png}{\tiny\em Source: http://en.wikipedia.org/wiki/Convolutional\_neural\_network}}
+  \only<3>{\easyfigure{slifigure/ch3-dropout.png}}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Conventional network structure}
+\begin{block}{\bf Pipeline for classification}
+  \scriptsize
+  $$\mathtt{Input} \rightarrow [[\mathtt{ConvLayer} \rightarrow \mathtt{ReLU}] * N \rightarrow \mathtt{PoolLayer}?]*M \rightarrow [\mathtt{FC}\rightarrow \mathtt{ReLU}]*K \rightarrow \mathtt{FC}$$
+  \vspace{-0.7cm}
+  \easyfigure{slifigure/ch3-cnnstructure.png}\vspace{-0.7cm}{\tiny\em http://www.mathworks.com/help/nnet/convolutional-neural-networks.html}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Transfer learning with CNNs}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\begin{block}{\bf Procedures}
+\begin{enumerate}
+  \setbeamercolor{alerted text}{fg=blue}
+  \item<1-|alert@+> Train deep CNNs on big dataset
+  \item<2-|alert@2-4> Use pre-trained CNNs as feature extractor, train on new dataset
+\end{enumerate}
+\end{block}
+\only<5->{
+  \begin{block}{\bf Transferable features}
+    \begin{itemize}
+    \item ConvNet features are more generic in early layers and more dataset-specific in later layers
+    \item Similarity and size of new dataset
+    \end{itemize}
+  \end{block}
+}
+
+\end{column}
+
+\begin{column}{0.45\textwidth}
+  \vspace{-0.7cm}
+  \only<1>{\easyfigure{slifigure/ch3-cnntimeline.png}{\tiny Kaiming He et al.: \em https://arxiv.org/abs/1512.03385}}
+  \only<2>{\easyfigure{slifigure/ch3-transfer-1.pdf}}
+  \only<3>{\easyfigure{slifigure/ch3-transfer-2.pdf}}
+  \only<4-5>{\easyfigure{slifigure/ch3-transfer-3.pdf}}
+  \only<6>{
+  \begin{block}{\bf t-SNE visualization}
+    Surf features of Office Dataset
+    \easyfigure{slifigure/ch3-office-surftsne.jpg}
+  \end{block}
+  }
+  \only<7>{
+  \begin{block}{\bf t-SNE visualization}
+    Caffe features of Office Dataset
+    \easyfigure{slifigure/ch3-office-decaftsne.jpg}
+  \end{block}
+  }
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Faster R-CNN}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+  \begin{block}{\bf Storyline}
+    \begin{itemize}
+      \setbeamercovered{transparent}
+      \setbeamercolor{alerted text}{fg=blue}
+      \item<1-|alert@+> R-CNN
+      \item<2-|alert@2-3> Spatial pyramid pooling (SPP)
+      \item<4-|alert@4-5> Fast-RCNN (ROI)
+      \item<6-|alert@6-> Faster-RCNN (RPN)
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{\bf Drawbacks}
+    \begin{itemize}
+      \only<1-2>{\item non-shared feature extraction computation}
+      \only<3->{\item \sout{non-shared feature extraction computation}}
+      \only<1-4>{\item cache features and post detector training}
+      \only<5->{\item \sout{cache features and post detector training}}
+      \only<1-6>{\item external proposals}
+      \only<7>{\item \sout{external proposals}}
+    \end{itemize}
+  \end{block}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+  \only<1>{\easyfigure{slifigure/ch3-rcnn.png}{\tiny Ross Girshick et al. CVPR 2014}}
+  \only<2-3>{\easyfigure{slifigure/ch3-spp.png}{\tiny Kaiming He et al.: \em https://arxiv.org/abs/1406.4729}}
+  \only<4-5>{\easyfigure{slifigure/ch3-fastrcnn.png}{\tiny Ross Girshick: \em https://arxiv.org/abs/1504.08083}}
+  \only<6->{\easyfigure{slifigure/ch3-fasterrcnn.png}{\tiny Shaoqing Ren et al.: \em https://arxiv.org/abs/1506.01497}}
+
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Deep learning frameworks}
+\vspace{-0.5cm}
+\begin{block}{\bf Landscape, Sep 2016}
+  \easyfigure[0.7]{slifigure/ch3-dllandscape-1.jpg}\vspace{-0.5cm}{\tiny F Chollet: \em http://twitter.com/fchollet/status/776455778274250752}
+\end{block}
+\end{frame}
+
+
