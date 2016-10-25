@@ -70,6 +70,16 @@ Entertainment   &En & $5$             & amusement park, ballroom, discotheque\\ 
 \frametitle{Face recognition and matching}
 \vspace{-0.25cm}
 \only<1>{
+\begin{block}{\bf User / Non-user test set}
+
+  \easyfigure[0.5]{slifigure/ch5-facetestset.png}
+
+\vspace{-0.5cm}{\scriptsize \color{blue} Select 50 subjects from LFW dataset, 5042 features for train and validation, 511 features as {\bf\color{purple} user test set}, 166 features from 100 other subjects as {\bf\color{purple} non-user test set}. (CASIA WebFace Database (Lightene CNN) does not overlap with LFW dataset). }
+
+\end{block}
+}
+
+\only<2>{
 \begin{block}{\bf Recognition accuracy with $T_p$}
 
 \begin{figure}[!htbp]
@@ -100,7 +110,7 @@ Entertainment   &En & $5$             & amusement park, ballroom, discotheque\\ 
 }
 
 
-\only<2>{
+\only<3>{
 \begin{block}{\bf Matching accuracy with $T_d$ \& $T_r$}
 
 \begin{figure}[!htbp]
@@ -125,7 +135,7 @@ Entertainment   &En & $5$             & amusement park, ballroom, discotheque\\ 
 % \label{fig:ch4-facematcheval}
 \end{figure}
 
-\vspace{-0.5cm}{\scriptsize \color{blue} Select 23 subjects from {\bf\color{purple} user test set} who has more than 10 features, use these 230 features as {\bf\color{purple} database group} (solid line), the other 281 features as {\bf\color{purple} query group} (dashed line).}
+\vspace{-0.5cm}{\scriptsize \color{blue} Select 23 subjects from {\bf\color{purple} user test set} who has more than 10 features, use these 230 features as {\bf\color{purple} database features} , the other 281 features as {\bf\color{purple} query features}. The 23 subjects are {\bf\color{purple} database subjects} (solid line), while the other 27 subjects are {\bf\color{purple} non-database subjects} (dashed line).}
 
 \end{block}
 }
@@ -224,7 +234,7 @@ scene classification recall & $77.7\%$  & ``No'' gesture recall     & $77.3\%$  
 % \label{tbl-energy}
 \begin{tabular}{lrrr}
 \toprule
-            & Face recognition      & Whole process (uAh)   & \# of images \\ \midrule
+            & Face feature extraction      & Whole process (uAh)   & \# of images \\ \midrule
 1 face      & $217.2$ (std $3.4$)   & $1134.5$ (std $45.9$) & $\sim 2800$       \\
 2 faces     & $344.1$ (std $13.1$)  & $1276.7$ (std $113.8$)    & $\sim 2500$       \\
 5 faces     & $692.6$ (std $36.5$)  & $1641.1$ (std $66.0$) & $\sim 2000$       \\ \bottomrule
